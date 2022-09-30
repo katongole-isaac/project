@@ -1,38 +1,66 @@
-.App {
-  text-align: center;
+a {
+	text-decoration: none;
+}
+.toolbar-link {
+	color: white;
+}
+.lis {
+	color: #0c2d48;
+	text-decoration: none;
+}
+.container-register {
+	background-color: #f8f9fa;
+	height: 89.5vh;
+	width: 100vw;
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+.agency-register {
+	width: calc(100vw - 240px);
+}
+.image-center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+.migrant-profile {
+	background-color: #e7e7e7;
+	height: 90vh;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.btn-send-video-div {
+	display: flex;
+	margin: 5px;
+
+	justify-content: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.complaintNavIcons {
+	background-color: #eeeeee;
+	padding: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.dataGridHeader {
+	background-color: #0c2d48;
+	color: #f8f9fa;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-.App-link {
-  color: #61dafb;
+.div-file {
+	position: relative;
+	width: 100%;
+	padding: 5px;
+}
+.div-file input {
+	position: relative;
+	width: 100%;
+	opacity: 0;
+	height: 46px;
+	z-index: 2;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.error_page_link {
+	text-decoration: none;
 }
