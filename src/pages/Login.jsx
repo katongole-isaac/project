@@ -147,7 +147,7 @@ const Login = () => {
 				spacing={2}
 				sx={{ maxHeight: "100vh", height: "88vh" }}
 			>
-				<Grid item xs={10} sm={8} md={5} lg={4}>
+				<Grid item xs={10} sm={8} md={5} lg={3}>
 					<Paper elevation={3} sx={{ marginTop: 12 }}>
 						{error && <Alert severity="error"> {error} </Alert>}
 						<Typography variant="h4" align="center" sx={{ color: "#0C2D48" }}>

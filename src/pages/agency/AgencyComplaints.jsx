@@ -12,74 +12,73 @@ import { UserState } from "../../userContext";
 
 const drawerWidth = 240;
 const useAgencyComplaintStyles = makeStyles({
-	page: {
-		width: `calc(100vw - ${drawerWidth}px)`,
-	},
-	links: {
-		color: "black",
-		textDecoration: "none",
-		"&:hover": {
-			color: "black",
-		},
-	},
+  page: {
+    width: `calc(100vw - ${drawerWidth}px)`,
+  },
+  links: {
+    color: "black",
+    textDecoration: "none",
+    "&:hover": {
+      color: "black",
+    },
+  },
 });
 const AgencyComplaints = () => {
-	const { user } = useContext(UserState);
-	const classes = useAgencyComplaintStyles();
+  const { user } = useContext(UserState);
+  const classes = useAgencyComplaintStyles();
 
-	//persisting data on the editor. we need to set 'letter' in localStorage and later we read it
-	localStorage.setItem("letter", "");
+  //persisting data on the editor. we need to set 'letter' in localStorage and later we read it
+  localStorage.setItem("letter", "");
 
-	
-	const { isLoading, error, errorDetails, results } =
-		useFetch(`/complaints/view/all`);
+  const { isLoading, error, errorDetails, results } =
+    useFetch(`/complaints/view/all`);
 
-	if (Object.keys(errorDetails).length !== 0) {
-		console.log(error);
-		return <PageError />;
-	}
+  if (Object.keys(errorDetails).length !== 0) {
+    console.log(error);
+    return <PageError />;
+  }
 
-	if (isLoading) {
-		return (
-			<>
-				<Loading />
-			</>
-		);
-	}
+  if (isLoading) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
 
-	if (results.res.length === 0) {
-		return (
-			<>
-				<Typography variant="h4">No complaints</Typography>
-			</>
-		);
-	}
+  if (results.res?.length === 0) {
+    return (
+      <>
+        <Typography variant="h4">No complaints</Typography>
+      </>
+    );
+  }
 
-	console.log(results);
+  console.log(results);
 
-	return (
-		<>
-			<div className={classes.page}>
-				<Typography variant="h6" padding={2}>
-					Complaints
-				</Typography>
+  return (
+    <>
+      <div className={classes.page}>
+        <Typography variant="h6" padding={2}>
+          Complaints
+        </Typography>
 
-				<List>
-					{results.res.map((complaint) => (
-						<>
-							<Link
-								to={`/agency/complaints/${complaint._id}`}
-								className={classes.links}
-								key={complaint._id}
-							>
-								<SingleComplaint {...complaint} />
-							</Link>
-						</>
-					))}
-				</List>
-			</div>
-		</>
-	);
+        <List>
+          {results.res?.map((complaint) => (
+            <>
+              <Link
+                to={`/agency/complaints/${complaint._id}`}
+                className={classes.links}
+                key={complaint._id}
+              >
+                <SingleComplaint {...complaint} />
+              </Link>
+            </>
+          ))}
+        </List>
+      </div>
+    </>
+  );
 };
 
 export default AgencyComplaints;

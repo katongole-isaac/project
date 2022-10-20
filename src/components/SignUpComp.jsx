@@ -139,7 +139,7 @@ const SignUpComp = ({
 	return (
 		<div className={signup ? "container-register" : "agency-register"}>
 			<Grid container justifyContent="center">
-				<Grid item xs={10} sm={8} md={4} lg={4} sx={{ marginTop: 4 }}>
+				<Grid item xs={10} sm={8} md={4} lg={3} sx={{ marginTop: 4 }}>
 					<Paper sx={{ padding: 2 }} elevation={3}>
 						{error && <Alert severity="error">{error}</Alert>}
 						{success && (
@@ -150,7 +150,7 @@ const SignUpComp = ({
 						</Typography>
 						<hr style={{ color: "#0C2D48" }} />
 						<form action="" autoComplete="off">
-							<div>
+							<div style={{display: 'flex'}} >
 								<FormControl>
 									<TextField
 										variant="standard"

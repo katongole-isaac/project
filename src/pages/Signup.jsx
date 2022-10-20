@@ -42,7 +42,7 @@ const SignUp = () => {
 			// setError();
 		} else {
 			if (Object.keys(results).length !== 0) {
-				if (results.agencies.length !== 0) {
+				if (results.agencies?.length !== 0) {
 					const agenciesRes = results.agencies;
 
 					setAgencies((prev) => {
