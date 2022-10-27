@@ -59,8 +59,5 @@ function signOut(dispatch, id) {
 	localStorage.removeItem(id);
 	localStorage.removeItem("user");
 	localStorage.removeItem("id_token");
-	localStorage.removeItem("letter");
-	localStorage.removeItem("currentPage");
-
 	return;
 }

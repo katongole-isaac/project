@@ -19,97 +19,87 @@ import CreateUser from "./pages/ministry/pages/CreateUser";
 import AgencyLayout from "./components/agency/AgencyLayout";
 import CreateMigrantAccount from "./pages/agency/createMigrantAccount";
 import MigrantAccounts from "./pages/agency/migrantsAccounts";
-import AgencyComplaints from "./components/agency/AgencyComplaints";
+import AgencyComplaints from "./pages/agency/AgencyComplaints";
+import TestingView from "./components/TestingView";
 import SingleComplaint from "./components/SingleComplaint";
 import PendingAccounts from "./pages/migrant/pages/PendingAccounts";
 import PendingProtected from "./pages/PendingProtected";
-import ChangePassword from "./components/migrants/complaint/ChangePassword";
+import MigrantPro from "./components/migrants/complaint/Profile";
 import VideoRec from "./components/migrants/complaint/VideoRec";
+import AudioRecording from "./components/migrants/complaint/AudioRec";
 import MigrantComplaints from "./components/migrants/complaint/Complaints";
+import SearchComplaint from "./components/migrants/myComplaint/SearchComplaint";
 import MigrantLayout from "./components/migrants/myComplaint/Layout";
 import "react-h5-audio-player/lib/styles.css";
 import "react-toastify/dist/ReactToastify.css";
-import { ThemeProvider } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material";
 import theme from "./theme";
-import ProfileLayout from "./components/generalProfile/ProfileLayout";
-import AgencyPaperAccount from "./pages/ministry/pages/AgencyPageAccount";
-import AgencyProfile from "./pages/agency/AgencyProfile";
-import AgencyComplaintsLayout from "./pages/agency/AgencyComplaintsLayout";
-import { SingleComplaintView } from "./components/singleComplaintView/SingleComplaintView";
-import LetterPDFView from "./components/singleComplaintView/LetterPDFView";
-import { UserContext } from "./userContext";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <UserContext>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="login" element={<Login />} />
-              <Route path="signup" element={<SignUp />} />
-            </Route>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
+          </Route>
 
-            {/* Testing routes here */}
-            <Route path="general" element={<ProfileLayout />} />
-            <Route path="complaint" element={<MigrantLayout />} />
-            <Route path="pro" element={<ChangePassword />} />
-            <Route path="/test" element={<LetterPDFView />} />
-            <Route path="/test/view" element={<SingleComplaintView />} />
-            <Route path="videor" element={<VideoRec />} />
-            {/* Testing routes here */}
+          {/* Testing routes here */}
+          <Route path="video" element={<MigrantComplaints />} />
+          <Route path="complaint" element={<MigrantLayout />} />
+          <Route path="pro" element={<MigrantPro />} />
 
-            <Route path="*" element={<Error />} />
-            <Route path="accounts/pending" element={<PendingAccounts />} />
-            <Route path="ministry" element={<MinistryDash />}>
-              <Route index element={<StopWatch />} />
-            </Route>
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<MigrantComplaints />} />
-              <Route path="profile" element={<ProfileLayout />} />
-              <Route path="mycomplaints" element={<MigrantLayout />} />
-            </Route>
-            <Route
-              path="/ministry/dashboard"
-              element={
-                <AdminProtectedRoute>
-                  <MinistryDash />
-                </AdminProtectedRoute>
-              }
-            >
-              <Route index element={<CreateUser />} />
-              <Route path="create" element={<CreateUser />} />
-              <Route path="accounts" element={<AgencyPaperAccount />} />
-            </Route>
+          <Route path="videor" element={<VideoRec />} />
+          {/* Testing routes here */}
 
-            <Route
-              path="/agency"
-              element={
-                <AdminProtectedRoute>
-                  <AgencyLayout />
-                </AdminProtectedRoute>
-              }
-            >
-              <Route index element={<AgencyComplaintsLayout />} />
-              <Route
-                path="complaints/:complaintId"
-                element={<SingleComplaintView />}
-              />
-              <Route path="create" element={<CreateMigrantAccount />} />
-              <Route path="accounts" element={<MigrantAccounts />} />
-              <Route path="profile" element={<AgencyProfile />} />
-            </Route>
-          </Routes>
-        </Router>
-      </UserContext>
+          <Route path="*" element={<Error />} />
+          <Route path="accounts/pending" element={<PendingAccounts />} />
+          <Route path="ministry" element={<MinistryDash />}>
+            <Route index element={<StopWatch />} />
+          </Route>
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<MigrantComplaints />} />
+            {/* <Route path="profile" element={<Profile />} /> */}
+            <Route path="mycomplaints" element={<MyComplaints />} />
+          </Route>
+          <Route
+            path="/ministry/dashboard"
+            element={
+              <AdminProtectedRoute>
+                <MinistryDash />
+              </AdminProtectedRoute>
+            }
+          >
+            {/* <Route index element={<CreateUser />} /> */}
+            <Route path="create" element={<CreateUser />} />
+            <Route path="accounts" element={<Accounts />} />
+          </Route>
+          <Route path="/test" element={<SingleComplaint />} />
+          <Route path="/test/view" element={<TestingView />} />
+          <Route
+            path="/agency"
+            element={
+              <AdminProtectedRoute>
+                <AgencyLayout />
+              </AdminProtectedRoute>
+            }
+          >
+            <Route index element={<AgencyComplaints />} />
+            <Route path="complaints/:complaintId" element={<TestingView />} />
+            <Route path="create" element={<CreateMigrantAccount />} />
+            <Route path="accounts" element={<MigrantAccounts />} />
+          </Route>
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 }

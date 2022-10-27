@@ -39,7 +39,6 @@ const enableMediaMsg = "Enable the camera and microphone";
 const Complaint = () => {
 	const classes = useStyles();
 	const { user } = useContext(UserState);
-	
 	const navigate = useNavigate();
 
 	const [reason, setReason] = useState("");

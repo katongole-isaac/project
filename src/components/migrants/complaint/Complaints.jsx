@@ -21,6 +21,7 @@ const checkDescription = (desc) => {
 
 const MigrantComplaints = () => {
   const { user } = useContext(UserState);
+
   const classes = useMigrantComplaintStyles();
   const [complaintDesc, setComplaintDesc] = useState("");
   const [audio, setAudio] = useState(null);

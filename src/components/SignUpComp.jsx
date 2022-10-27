@@ -65,6 +65,7 @@ const SignUpComp = ({
         [target.name]: target.value,
       };
     });
+    console.log(target.name, target.value);
   };
   const {
     firstname,

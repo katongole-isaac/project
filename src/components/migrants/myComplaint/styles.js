@@ -1,7 +1,7 @@
 import { makeStyles } from "@mui/styles";
 import { fontWeight } from "@mui/system";
 
-const useMyCompStyles = makeStyles((theme) => {
+const myCompStyles = makeStyles((theme) => {
   return {
     card: {
       minHeight: "150px",
@@ -52,4 +52,4 @@ const useMyCompStyles = makeStyles((theme) => {
   };
 });
 
-export default useMyCompStyles;
+export default myCompStyles;
