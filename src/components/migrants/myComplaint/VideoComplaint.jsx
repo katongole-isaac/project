@@ -10,12 +10,12 @@ import {
 import MyChip from "../../MyChip";
 import AudioPlayer from "react-h5-audio-player";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import myCompStyles from "./styles";
+import useMyCompStyles from "./styles";
 import { Stack } from "@mui/system";
 import VideoPlayer from "./VideoPlayer";
 
 const VideoComplaint = () => {
-  const classes = myCompStyles();
+  const classes = useMyCompStyles();
   return (
     <>
       <Divider> Today </Divider>

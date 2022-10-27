@@ -15,7 +15,6 @@ const UserAction = ({
 	setUpdateError,
 	UPDATE_AGENCY_URL,
 }) => {
-	console.log(UPDATE_AGENCY_URL);
 	const [isLoading, setIsLoading] = useState(false);
 	const [success, setSucess] = useState(false);
 

@@ -3,9 +3,9 @@ import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
 import authFetch from "../../../authFetch";
 import useFetch from "../../../useFetch";
-import myCompStyles from "./styles";
+import useMyCompStyles from "./styles";
 
-const SEARCH_URL = ``;
+const SEARCH_URL = `/complaints/search`;
 const SearchComplaint = ({}) => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState(null);
@@ -17,12 +17,13 @@ const SearchComplaint = ({}) => {
     if (search.match(/^\s+$/g)) return;
     setIsLoading(true);
     try {
-      const resp = await authFetch.get(SEARCH_URL);
+      const resp = await authFetch.get(`${SEARCH_URL}?q=${search}`);
+      console.log(`reason`, resp.data);
     } catch (ex) {
       console.log(ex);
     }
   };
-  const classes = myCompStyles();
+  const classes = useMyCompStyles();
 
   return (
     <>

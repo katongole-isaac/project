@@ -1,23 +1,26 @@
+import { Container, Grid } from "@mui/material";
+import { Box } from "@mui/system";
 import { Outlet } from "react-router-dom";
-import useAgencyStyles from "../../agency";
+import useAgencyStyles from "./agency";
 import AgencyAppBar from "./AgencyAppBar";
-import AgencyDrawer from "./AgencyDrawer";
+import AgencySideNav from "./AgencySideNav";
 
 const AgencyLayout = () => {
-	const classes = useAgencyStyles();
+  const classes = useAgencyStyles();
 
-	return (
-		<>
-			<AgencyAppBar />
-			<div className={classes.page}>
-				<AgencyDrawer />
-				<div className={classes.pageContent}>
-					<div className={classes.toolbar}></div>
-					<Outlet />
-				</div>
-			</div>
-		</>
-	);
+  return (
+    <>
+      <AgencyAppBar />
+      <div style={{ height: "64px" }}></div>
+
+      <Box sx={{ display: "flex" }}>
+        <AgencySideNav />
+        <div style={{ overflowX: "hidden", flexGrow: 1, overflowY: "hidden" }}>
+          <Outlet />
+        </div>
+      </Box>
+    </>
+  );
 };
 
 export default AgencyLayout;

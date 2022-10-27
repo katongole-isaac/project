@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
-import useAgencyStyles from "../../agency";
 import { Grid } from "@mui/material";
+import useAgencyStyles from "../../components/agency/agency";
 
 import { useMemo, useState } from "react";
 import React from "react";
@@ -21,6 +21,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import PendingAccounts from "./PendingAccounts";
 import ActiveAccounts from "./ActiveAccounts";
+import { Container } from "@mui/system";
 
 const MigrantContext = React.createContext();
 
@@ -30,180 +31,153 @@ const accountStatus = "active";
 const AccStatus = ["active", "closed"];
 
 const MigrantAccounts = () => {
-	const { user } = useContext(UserState);
-	const classes = useAgencyStyles();
+  const { user } = useContext(UserState);
+  const classes = useAgencyStyles();
 
-	const { error, errorDetails, isLoading, results } = useFetch(
-		`${MIGRANT_ACCOUNTS_URL}?name=${user.name}&status=${accountStatus}`
-	);
-	const rowsOptions = [5, 10, 15, 25, 50];
-	const [pageSize, setPageSize] = useState(rowsOptions[0]);
-	const [updateError, setUpdateError] = useState({
-		msg: "",
-		isOpen: false,
-	});
+  const { error, errorDetails, isLoading, results } = useFetch(
+    `${MIGRANT_ACCOUNTS_URL}?name=${user.name}&status=${accountStatus}`
+  );
+  const rowsOptions = [5, 10, 15, 25, 50];
+  const [pageSize, setPageSize] = useState(rowsOptions[0]);
+  const [updateError, setUpdateError] = useState({
+    msg: "",
+    isOpen: false,
+  });
 
-	const [rowId, setRowId] = useState(null);
+  const [rowId, setRowId] = useState(null);
 
-	const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState("1");
 
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
-	};
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
-	const columns = useMemo(() => {
-		return [
-			{
-				field: `firstname`,
-				headerName: " First Name",
-				width: 200,
-				editable: true,
-				hideable: false,
-				headerClassName: "dataGridHeader",
-			},
-			{
-				field: `lastname`,
-				headerName: "Last Name",
-				width: 200,
-				editable: true,
-				hideable: false,
-				headerClassName: "dataGridHeader",
-			},
-			{
-				field: `email`,
-				headerName: " Email",
-				width: 260,
-				editable: true,
-				hideable: false,
-				headerAlign: "left",
-				valueFormatter: (params) => params.value.toLowerCase(),
-				headerClassName: "dataGridHeader",
-			},
-			{
-				field: `phone`,
-				headerName: "Phone",
-				width: 200,
-				editable: true,
-				hideable: false,
-				editable: true,
-				headerClassName: "dataGridHeader",
-			},
-			{
-				field: `passport`,
-				headerName: "Passport",
-				width: 150,
-				editable: true,
-				headerClassName: "dataGridHeader",
-			},
-			{
-				field: `accountStatus`,
-				headerName: "Account Status",
-				width: 150,
-				type: "singleSelect",
-				valueOptions: ["active"],
-				editable: true,
-				headerClassName: "dataGridHeader",
-				renderCell: (param) => {
-					if (param.value === AccStatus[0])
-						return (
-							<Chip
-								label={`${param.value}`}
-								variant="outlined"
-								color="success"
-							/>
-						);
+  const columns = useMemo(() => {
+    return [
+      {
+        field: `firstname`,
+        headerName: " First Name",
+        width: 200,
+        editable: true,
+        hideable: false,
+        headerClassName: "dataGridHeader",
+      },
+      {
+        field: `lastname`,
+        headerName: "Last Name",
+        width: 200,
+        editable: true,
+        hideable: false,
+        headerClassName: "dataGridHeader",
+      },
+      {
+        field: `email`,
+        headerName: " Email",
+        width: 260,
+        editable: true,
+        hideable: false,
+        headerAlign: "left",
+        valueFormatter: (params) => params.value.toLowerCase(),
+        headerClassName: "dataGridHeader",
+      },
+      {
+        field: `phone`,
+        headerName: "Phone",
+        width: 200,
+        editable: true,
+        hideable: false,
+        editable: true,
+        headerClassName: "dataGridHeader",
+      },
+      {
+        field: `passport`,
+        headerName: "Passport",
+        width: 150,
+        editable: true,
+        headerClassName: "dataGridHeader",
+      },
+      {
+        field: `accountStatus`,
+        headerName: "Account Status",
+        width: 150,
+        type: "singleSelect",
+        valueOptions: ["active"],
+        editable: true,
+        headerClassName: "dataGridHeader",
+        renderCell: (param) => {
+          if (param.value === AccStatus[0])
+            return (
+              <Chip
+                label={`${param.value}`}
+                variant="outlined"
+                color="success"
+              />
+            );
 
-					if (param.value === AccStatus[1])
-						return (
-							<Chip
-								variant="outlined"
-								label={`${param.value}`}
-								color="error"
-								size="small"
-								sx={{ mr: 1 }}
-							/>
-						);
-				},
-			},
+          if (param.value === AccStatus[1])
+            return (
+              <Chip
+                variant="outlined"
+                label={`${param.value}`}
+                color="error"
+                size="small"
+                sx={{ mr: 1 }}
+              />
+            );
+        },
+      },
 
-			{
-				field: "action",
-				headerName: "Action",
-				type: "actions",
-				headerClassName: "dataGridHeader",
+      {
+        field: "action",
+        headerName: "Action",
+        type: "actions",
+        headerClassName: "dataGridHeader",
 
-				renderCell: (param) => (
-					<UserAction {...{ param, rowId, setRowId, setUpdateError }} />
-				),
-			},
-		];
-	}, [rowId]);
+        renderCell: (param) => (
+          <UserAction {...{ param, rowId, setRowId, setUpdateError }} />
+        ),
+      },
+    ];
+  }, [rowId]);
 
-	if (isLoading) return <Loading />;
+  if (isLoading) return <Loading />;
 
-	if (Object.keys(errorDetails).length !== 0) return <PageError />;
+  if (Object.keys(errorDetails).length !== 0) return <PageError />;
 
-	console.log(errorDetails);
-	if (results.accounts === "undefined" || results.accounts.length === 0)
-		return <NoContent msg={noContentMsg} />;
+  console.log(errorDetails);
+  if (results.accounts === "undefined" || results.accounts.length === 0)
+    return <NoContent msg={noContentMsg} />;
 
-	const rows = results.accounts;
+  const rows = results.accounts;
 
-	console.log(results.accounts);
+  console.log(results.accounts);
 
-	return (
-		<>
-			<UpdateError {...{ updateError, setUpdateError }} />
-			<Typography variant="h5" align="center">
-				Migrant Workers
-			</Typography>
-			<div>
-				<TabContext value={value}>
-					<Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-						<TabList onChange={handleChange} aria-label="lab API tabs example">
-							<Tab label="Active" value="1" />
-							<Tab label="Pending" value="2" />
-							{/* <Tab label="Item Three" value="3" /> */}
-						</TabList>
-					</Box>
-					<TabPanel value="1">
-						<ActiveAccounts />
-						{/* <Box
-							sx={{
-								"& .style-Active": {
-									bgcolor: "#eeeeee",
-								},
-								"& .style-Closed": {
-									bgcolor: "#ef9a9a",
-									" &:hover": {
-										bgcolor: "#ffcdd2",
-									},
-								},
-								display: "flex",
-								width: `calc(100vw - 240px);`,
-							}}
-						>
-							<div className={classes.dataGrid}>
-								<AccountsDataGrid
-									columns={columns}
-									rows={rows}
-									isLoading={isLoading}
-									pageSize={pageSize}
-									setPageSize={setPageSize}
-									setRowId={setRowId}
-									rowsOptions={rowsOptions}
-								/>
-							</div>
-						</Box> */}
-					</TabPanel>
-					<TabPanel value="2">
-						<PendingAccounts />
-					</TabPanel>
-					<TabPanel value="3">Item Three</TabPanel>
-				</TabContext>
-			</div>
-		</>
-	);
+  return (
+    <>
+      <Container maxWidth={false} sx={{ flexGrow: 1, backgroundColor: "grey" }}>
+        <UpdateError {...{ updateError, setUpdateError }} />
+        <Typography variant="h5" align="center">
+          Migrant Workers
+        </Typography>
+        <div>
+          <TabContext value={value}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList onChange={handleChange}>
+                <Tab label="Active" value="1" />
+                <Tab label="Pending" value="2" />
+              </TabList>
+            </Box>
+            <TabPanel value="1">
+              <ActiveAccounts />
+            </TabPanel>
+            <TabPanel value="2">
+              <PendingAccounts />
+            </TabPanel>
+          </TabContext>
+        </div>
+      </Container>
+    </>
+  );
 };
 
 export default MigrantAccounts;

@@ -8,11 +8,11 @@ import {
 } from "@mui/material";
 import MyChip from "../../MyChip";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import myCompStyles from "./styles";
+import useMyCompStyles from "./styles";
 import { Stack } from "@mui/system";
 
 const TextComplaint = () => {
-  const classes = myCompStyles();
+  const classes = useMyCompStyles();
   return (
     <>
       <Divider> Toady </Divider>
