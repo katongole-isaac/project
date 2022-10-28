@@ -12,10 +12,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { Box } from "@mui/material";
 import LetterPDFView from "./LetterPDFView";
-import { BlobProvider, PDFDownloadLink } from "@react-pdf/renderer";
+import { BlobProvider, pdf, PDFDownloadLink } from "@react-pdf/renderer";
 import LetterPDF from "./LetterPDF";
+import { async } from "videojs-record";
+import { useState } from "react";
 
 export default function LetterSection({ open, setOpen }) {
+  const [doc, setDoc] = useState(null);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -24,11 +27,15 @@ export default function LetterSection({ open, setOpen }) {
     setOpen(false);
   };
 
-  const handleSend = () =>{
+  const handleSend = () => {};
 
-  }
-  
   const { user, res } = useContext(SingleComplaintContext);
+  const getPDF = async () => {
+    const pdfBlob = pdf(<LetterPDF user={user} res={res} />).toBlob();
+    const data = await pdfBlob;
+    setDoc(data);
+    console.log(doc)
+  };
   return (
     <>
       <Dialog
@@ -51,17 +58,14 @@ export default function LetterSection({ open, setOpen }) {
               Compose letter for this Complaint
             </Typography>
 
-            <Box sx={{ "& a": { textDecoration: "none", color: '#ffF' } }}>
+            <Box sx={{ "& a": { textDecoration: "none", color: "#ffF" } }}>
               <PDFDownloadLink document={<LetterPDF user={user} res={res} />}>
-                <Button
-                  autoFocus
-                  color="inherit"
-                >
+                <Button autoFocus color="inherit">
                   Download
                 </Button>
               </PDFDownloadLink>
             </Box>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button autoFocus color="inherit" onClick={getPDF}>
               send
             </Button>
           </Toolbar>

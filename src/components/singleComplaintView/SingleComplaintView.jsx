@@ -19,6 +19,8 @@ import { Masonry } from "@mui/lab";
 import ReactHtmlParser from "react-html-parser";
 import ComplaintHeader from "./complaintHeader";
 import React from "react";
+import ReplyIcon from "@mui/icons-material/Reply";
+import ShortcutIcon from "@mui/icons-material/Shortcut";
 import ComplaintTitleSection from "./ComplaintTitleSection";
 import ComplaintBioInfo from "./ComplaintBioInfo";
 import VideoComplaintView from "./VideoComplaintView";
@@ -47,7 +49,7 @@ const COMPLAINT_URL = `/complaints/views/`;
 const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
   const { user } = useContext(UserState);
 
-  const { complaintId } =  useParams();
+  const { complaintId } = useParams();
   const [pageErrorMsg, setPageErrorMsg] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -81,7 +83,9 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
 
   return (
     <>
-      <SingleComplaintContext.Provider value={{ res, classes, profilePic, user }}>
+      <SingleComplaintContext.Provider
+        value={{ res, classes, profilePic, user }}
+      >
         <Container sx={{ height: "100%" }}>
           <Box>
             <LetterSection open={openDialog} setOpen={setOpenDialog} />
@@ -93,13 +97,26 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
             <TextComplaintView />
             <div>
               <Stack spacing={2} direction="row" sx={{ m: 1 }}>
-                <Button onClick={handleClick}> Transcribe </Button>
+                <Button
+                  startIcon={<ReplyIcon />}
+                  onClick={handleClick}
+                  variant="outlined"
+                  sx={{}}
+                >
+                  Reply
+                </Button>
 
                 {/* <StyledMuiButon color="#fff" backgroundColor="palevioletred">
                   Transcribe
                 </StyledMuiButon> */}
 
-                <Button onClick={() => setOpenDialog(true)}> Forward</Button>
+                <Button
+                  startIcon={<ShortcutIcon />}
+                  variant="outlined"
+                  onClick={() => setOpenDialog(true)}
+                >
+                  Forward
+                </Button>
               </Stack>
             </div>
           </Box>
