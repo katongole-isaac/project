@@ -38,6 +38,8 @@ import AgencyComplaintsLayout from "./pages/agency/AgencyComplaintsLayout";
 import { SingleComplaintView } from "./components/singleComplaintView/SingleComplaintView";
 import LetterPDFView from "./components/singleComplaintView/LetterPDFView";
 import { UserContext } from "./userContext";
+import ComplaintEditor from "./components/Editor/ComplaintEditor";
+
 
 function App() {
   return (
@@ -55,7 +57,7 @@ function App() {
             <Route path="general" element={<ProfileLayout />} />
             <Route path="complaint" element={<MigrantLayout />} />
             <Route path="pro" element={<ChangePassword />} />
-            <Route path="/test" element={<LetterPDFView />} />
+            <Route path="/editor" element={<ComplaintEditor />} />
             <Route path="/test/view" element={<SingleComplaintView />} />
             <Route path="videor" element={<VideoRec />} />
             {/* Testing routes here */}

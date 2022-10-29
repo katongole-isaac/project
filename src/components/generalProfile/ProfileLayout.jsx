@@ -1,11 +1,15 @@
 import { Box, Grid } from "@mui/material";
 import { Container } from "@mui/material";
+import { useContext, useState } from "react";
+import { UserState } from "../../userContext";
 
 import ProfileHeader from "./ProfileHeader";
 import ProfileView from "./ProfileView";
 import useGenStyles from "./styles";
 
 const ProfileLayout = () => {
+  const { user: currentUser } = useContext(UserState);
+  const [user, setUser] = useState(currentUser);
   const classes = useGenStyles();
   return (
     <Container>
@@ -23,7 +27,7 @@ const ProfileLayout = () => {
           sx={{ backgroundColor: "#FAFAFA" }}
         >
           <Box className={classes.proHeaderBox}>
-            <ProfileHeader />
+            <ProfileHeader user={user} />
           </Box>
         </Grid>
         <Grid
@@ -40,7 +44,7 @@ const ProfileLayout = () => {
               height: "100%",
             }}
           >
-            <ProfileView />
+            <ProfileView user={user} setUser={setUser} />
           </Box>
         </Grid>
       </Grid>

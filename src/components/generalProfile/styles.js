@@ -9,11 +9,13 @@ const useGenStyles = makeStyles((theme) => {
       padding: 5,
     },
     avatarBox: {
-      width: "150px",
-      height: "150px",
+      maxWidth: "70%",
       position: "relative",
-      margin: 2,
+      margin: "auto",
       position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
       [theme.breakpoints.down("sm")]: {},
     },
     formDiv: {
@@ -25,7 +27,13 @@ const useGenStyles = makeStyles((theme) => {
     },
     formWrapperBox: {
       padding: 10,
-      margin: '10px',
+      margin: "10px",
+    },
+    fileInput: {
+      zIndex: 1,
+      opacity: 0,
+      width: "100%",
+      cursor: "pointer",
     },
   };
 });

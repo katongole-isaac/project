@@ -50,6 +50,11 @@ const useAgencyStyles = makeStyles({
   activeLink: {
     backgroundColor: "#6096ba",
   },
+  profileCardBox: {
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+  },
 });
 
 export default useAgencyStyles;

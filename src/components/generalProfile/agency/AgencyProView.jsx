@@ -1,35 +1,39 @@
 import { Chip, Divider, FormControl, Stack, TextField } from "@mui/material";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import useGenStyles from "../styles";
 import { Box } from "@mui/system";
-import useGenStyles from "./styles";
 import {
   phoneValidate,
   email as emailValidate,
-  passport as passportValidate,
-} from "../../validate";
-import SuccessNotify from "../notify/successNotify";
-import { UserState } from "../../userContext";
-import authFetch from "../../authFetch";
+  locationValidate,
+  nameValidate,
+} from "../../../validate";
+import SuccessNotify from "../../notify/successNotify";
+import { UserState } from "../../../userContext";
+import authFetch from "../../../authFetch";
 import { useContext } from "react";
-import ChangePassword from "../migrants/complaint/ChangePassword";
+import ChangePassword from "../../migrants/complaint/ChangePassword";
 
-const UPDATE_PRO_URL = `/user/accounts/update`;
+const UPDATE_PRO_URL = `/agency/account/update`;
 const MSG = "account updated successfully";
-const UPDATE_PASSWD_URL = `/user/update/password`;
+const UPDATE_PASSWD_URL = `/agency/account/password/update`;
 
-const ProfileView = ({ user, setUser }) => {
+const ProfileView = ({ setUser, user }) => {
   const classes = useGenStyles();
   const [data, setData] = useState({
     email: user.email,
-    passport: user.passport,
+    location: user.location,
     phone: user.phone,
+    name: user.name,
   });
 
   const fullname = `${user.firstname} ${user.lastname}`;
   const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [passportError, setPassportError] = useState(false);
+
+  const [errorMsg, setErrorMsg] = useState("");
+  const [nameError, setNameError] = useState(false);
+  const [locationError, setlocationError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [onSuccess, setOnSuccess] = useState(false);
   const [onError, setOnError] = useState(false);
@@ -37,10 +41,9 @@ const ProfileView = ({ user, setUser }) => {
 
   const handleChange = ({ target }) => {
     setEmailError(false);
-    setPassportError(false);
-    setPasswordError(false);
+    setlocationError(false);
     setPhoneError(false);
-
+    setNameError(false);
     setData((prev) => {
       return {
         ...prev,
@@ -51,14 +54,19 @@ const ProfileView = ({ user, setUser }) => {
     console.log(target.name, target.value);
   };
 
-  const { email, passport, phone } = data;
+  const { email, location, phone, name } = data;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const isEmail = await emailValidate({ email });
     const isPhone = await phoneValidate({ phone: phone });
-    const isPassport = await passportValidate({ passport });
+    const islocation = await locationValidate({ location });
+    const isName = await nameValidate({ name });
 
+    if (isName === false) {
+      setNameError(true);
+      return;
+    }
     if (!isEmail) {
       setEmailError(true);
       return;
@@ -67,17 +75,16 @@ const ProfileView = ({ user, setUser }) => {
       setPhoneError(true);
       return;
     }
-    if (isPassport === false) {
-      setPassportError(true);
+    if (islocation === false) {
+      setlocationError(true);
       return;
     }
     try {
       const resp = await authFetch.put(`${UPDATE_PRO_URL}/${user.user}`, {
-        id: user.user,
+        _id: user.user,
         ...data,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        accountStatus: user.status,
+        status: user.status,
+        createdAt: user.createdAt,
       });
       if (resp.status >= 200 && resp.status <= 299) {
         setOnSuccess(true);
@@ -86,11 +93,12 @@ const ProfileView = ({ user, setUser }) => {
           "user",
           JSON.stringify({ ...user, ...resp.data.result })
         );
-        setUser((prev) => ({ ...prev, ...resp.data.result }));
-        console.log(resp.data.result);
+        setUser((prev) => ({ ...prev, ...resp.data.result })); // updating the view
       }
     } catch (ex) {
       setOnError(true);
+      if (ex.response.data?.success === false) setErrorMsg("");
+      if (ex.response.data?.error) setErrorMsg(ex.response.data.error);
       console.log(ex);
     }
   };
@@ -103,6 +111,7 @@ const ProfileView = ({ user, setUser }) => {
         onError={onError}
         setOnError={setOnError}
         msg={MSG}
+        errorMsg={errorMsg}
       />
       {showPasswordDialog && (
         <>
@@ -113,44 +122,42 @@ const ProfileView = ({ user, setUser }) => {
           />
         </>
       )}
-      <Box sx={{}}>
+      <Box
+        sx={{
+          maxWidth: "80%",
+          margin: "auto",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <form autoComplete="off">
           <Box className={classes.formWrapperBox}>
             <Divider>
               <Chip
-                label="Bio Information"
+                label="Agency Information"
                 sx={{
-                  backgroundColor: "palevioletred",
+                  backgroundColor: "#219ebc",
                   color: "white",
                 }}
               />
             </Divider>
-            <div className={classes.formDiv}>
-              <FormControl>
-                <TextField
-                  variant="outlined"
-                  label="FullName"
-                  value={fullname}
-                  size="small"
-                  disabled
-                  margin="normal"
-                  sx={{ width: "90%", mr: 0.2 }}
-                />
-              </FormControl>
-              <FormControl>
-                <TextField
-                  variant="outlined"
-                  label="Gender"
-                  value={user.gender === "M" ? "Male" : "Female"}
-                  name="passport"
-                  size="small"
-                  type="text"
-                  disabled
-                  sx={{ width: "80%" }}
-                  margin="normal"
-                />
-              </FormControl>
-            </div>
+            <FormControl fullWidth sx={{ margin: 1 }}>
+              <TextField
+                variant="outlined"
+                label="Agency Name"
+                value={name}
+                name="name"
+                size="small"
+                margin="normal"
+                sx={{ width: "90%", mr: 0.2 }}
+                onChange={handleChange}
+                error={nameError}
+                helperText={
+                  nameError ? "name must atleast be more than 3 char(s)..." : ""
+                }
+              />
+            </FormControl>
+
             <FormControl fullWidth sx={{ margin: 1 }}>
               <TextField
                 variant="outlined"
@@ -183,15 +190,17 @@ const ProfileView = ({ user, setUser }) => {
             <FormControl fullWidth sx={{ margin: 1 }}>
               <TextField
                 variant="outlined"
-                label="Passport No."
-                value={passport}
-                name="passport"
+                label="location "
+                value={location}
+                name="location"
                 size="small"
                 onChange={handleChange}
                 type="text"
                 sx={{ width: "100%" }}
-                error={passportError}
-                helperText={passportError ? "Invalid passport number..." : ""}
+                error={locationError}
+                helperText={
+                  locationError ? "location must be atleast 3 char(s) ..." : ""
+                }
               />
             </FormControl>
 
@@ -201,9 +210,9 @@ const ProfileView = ({ user, setUser }) => {
                 onClick={(e) => handleSubmit(e)}
                 sx={{
                   textTransform: "lowercase",
-                  backgroundColor: "palevioletred",
+                  backgroundColor: "#219ebc",
                   "&:hover": {
-                    backgroundColor: "palevioletred",
+                    backgroundColor: "#219ebc",
                     opacity: 0.8,
                   },
                 }}
@@ -215,9 +224,9 @@ const ProfileView = ({ user, setUser }) => {
                 onClick={() => setShowPasswordDialog(true)}
                 sx={{
                   textTransform: "lowercase",
-                  backgroundColor: "palevioletred",
+                  backgroundColor: "#219ebc",
                   "&:hover": {
-                    backgroundColor: "palevioletred",
+                    backgroundColor: "#219ebc",
                     opacity: 0.8,
                   },
                 }}

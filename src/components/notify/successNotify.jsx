@@ -1,7 +1,7 @@
 import { ToastContainer, toast } from "react-toastify";
 import React from "react";
 
-const SuccessNotify = ({ success, setOnSuccess, setOnError, onError, msg }) => {
+const SuccessNotify = ({ success, setOnSuccess, setOnError, onError, msg, errorMsg }) => {
   const toastId = 1001;
   const toastIdErr = 1002;
   const opts = {
@@ -14,10 +14,11 @@ const SuccessNotify = ({ success, setOnSuccess, setOnError, onError, msg }) => {
     toast.success(msg || `complaint sent successfully`, opts);
   };
 
-  const ErrorNotify = () => toast.error(`something failed !`, opts);
+  const ErrorNotify = (errorMsg) =>
+    toast.error(` ${errorMsg || "something failed !"}`, opts);
 
   if (success) notify();
-  if (onError) ErrorNotify();
+  if (onError) ErrorNotify(errorMsg);
 
   return (
     <>

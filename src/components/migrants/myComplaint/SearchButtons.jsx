@@ -6,12 +6,19 @@ import useMyCompStyles from "./styles";
 const SearchButtons = ({ state, setState }) => {
   const classes = useMyCompStyles();
 
-  
   return (
     <>
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={10} md={6} sx={{ m: 1 }}>
           <Stack direction="row" spacing={2} justifyContent="center">
+            <StyledSearchButton
+              variant="outlined"
+              onClick={() => setState("all")}
+              size="medium"
+              state={state === "all" ? true : false}
+            >
+              All
+            </StyledSearchButton>
             <StyledSearchButton
               variant="outlined"
               onClick={() => setState("video")}

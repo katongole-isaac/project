@@ -10,12 +10,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DisplaySnack from "../../DisplaySnack";
 import PasswordIcon from "@mui/icons-material/Password";
 
-const UPDATE_PASSWD_URL = `/user/update/password`;
 const PASSWD_LEN = 5;
 const HELPER_TEXT_NEWPASSWD = `password must be atleast 6 char(s)`;
 const HELPER_TEXT_OLDPASSWD = `doesnot match the old password`;
 
-const ChangePassword = ({ showPasswordDialog, setShowPasswordDialog }) => {
+const ChangePassword = ({ showPasswordDialog, setShowPasswordDialog , UPDATE_PASSWD_URL }) => {
   const { user } = useContext(UserState);
 
   const [oldPasswdError, setOldpasswdError] = useState(false);

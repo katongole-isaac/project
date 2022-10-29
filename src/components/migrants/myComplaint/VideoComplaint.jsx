@@ -14,27 +14,43 @@ import useMyCompStyles from "./styles";
 import { Stack } from "@mui/system";
 import VideoPlayer from "./VideoPlayer";
 
-const VideoComplaint = () => {
-  const classes = useMyCompStyles();
+const VideoComplaint = ({ complaints }) => {
   return (
     <>
-      <Divider> Today </Divider>
+      {/* <Divider> Today </Divider> */}
 
+      {complaints.map((complaint) => {
+        if (complaint.videoUrl)
+          return <VideoCard key={complaint._id} {...complaint} />;
+      })}
+    </>
+  );
+};
+
+export default VideoComplaint;
+const VideoCard = ({ _id, reason, sent, status, videoUrl }) => {
+  const classes = useMyCompStyles();
+
+  return (
+    <>
       <Card sx={{ borderRadius: "20px", padding: 1 }}>
         <Box className={classes.card}>
           <Box className={classes.boxInsideCard}>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              complaint Reason
-            </Typography>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              complaint Date
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Typography> ID: {_id}</Typography>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                {reason}
+              </Typography>
+            </Stack>
+            <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+              SentOn: {new Date(parseInt(sent)).toDateString()}
             </Typography>
           </Box>
 
           <CardMedia>
             <Box className={classes.Box}>
               <Box className={classes.videoBox}>
-                <VideoPlayer />
+                <VideoPlayer videoUrl={videoUrl} />
               </Box>
               <Box className={classes.videoNote}>
                 <Typography variant="body2" sx={{ fontWeight: "bold" }}>
@@ -50,7 +66,7 @@ const VideoComplaint = () => {
           </CardMedia>
           <CardActions>
             <Stack direction="row" spacing={1}>
-              <MyChip color={"warning"} label="pending" />
+              <MyChip color={"warning"} label={status} />
               <Stack direction="row" spacing={1}>
                 <ChatBubbleOutlineIcon fontSize="small" />
                 <Typography variant="body2"> 2</Typography>
@@ -62,5 +78,3 @@ const VideoComplaint = () => {
     </>
   );
 };
-
-export default VideoComplaint;

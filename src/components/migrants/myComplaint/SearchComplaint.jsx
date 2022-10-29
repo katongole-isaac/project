@@ -6,7 +6,7 @@ import useFetch from "../../../useFetch";
 import useMyCompStyles from "./styles";
 
 const SEARCH_URL = `/complaints/search`;
-const SearchComplaint = ({}) => {
+const SearchComplaint = ({ setSearchResults, user }) => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
@@ -17,8 +17,11 @@ const SearchComplaint = ({}) => {
     if (search.match(/^\s+$/g)) return;
     setIsLoading(true);
     try {
-      const resp = await authFetch.get(`${SEARCH_URL}?q=${search}`);
-      console.log(`reason`, resp.data);
+      const resp = await authFetch.get(
+        `${SEARCH_URL}?q=${search}&email=${user.email}`
+      );
+      console.log(`reason`, resp.data.res);
+      setSearchResults((prev) => [...prev, ...resp.data.res]);
     } catch (ex) {
       console.log(ex);
     }

@@ -1,15 +1,21 @@
 import { Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-
-const BioInfo = () => {
+import { firstLetterUpperCase } from "../../utils/firstLetterUpperCase";
+const BioInfo = ({ user }) => {
   return (
     <>
-      <Stack>
-        <Typography varaint="h5" fontSize={20} fontWeight={700}>
-          FullName
+      <Stack marginTop={2} >
+        <Typography varaint="h5" mb={1} fontSize={20} fontWeight={700}>
+          {`${firstLetterUpperCase(user.firstname)} ${firstLetterUpperCase(
+            user.lastname
+          )}`}
         </Typography>
-        <Typography varaint="body1">FullName</Typography>
-        <Typography varaint="h5">Migrant</Typography>
+        <Typography varaint="body1">{user.email}</Typography>
+        <Typography varaint="body1">{user.phone}</Typography>
+
+        <Typography varaint="body1" sx={{ fontWeight: "bold" }}>
+          Migrant
+        </Typography>
       </Stack>
     </>
   );

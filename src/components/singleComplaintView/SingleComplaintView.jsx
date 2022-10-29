@@ -5,6 +5,7 @@ import {
   Typography,
   Divider,
   Grid,
+  Tooltip,
 } from "@mui/material";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Stack } from "@mui/system";
@@ -29,6 +30,9 @@ import TextComplaintView from "./TextComplaintView";
 import StyledMuiButon from "../Styled/StyledMuiButton";
 import LetterSection from "./LetterSection";
 import { UserState } from "../../userContext";
+import ComplaintEditor from "../Editor/ComplaintEditor";
+import CommentSection from "./CommentSection";
+import { StyledTooltip } from "../Styled/StyledTooltip";
 
 const noContentMsg = "No content available";
 const SingleComplaintContext = React.createContext();
@@ -52,6 +56,7 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
   const { complaintId } = useParams();
   const [pageErrorMsg, setPageErrorMsg] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
+  const [comment, setComment] = useState(null);
 
   const { isLoading, errorDetails, results, error } = useFetch(
     `${COMPLAINT_URL}${complaintId}`
@@ -95,28 +100,37 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
             <VideoComplaintView />
             <AudioComplaintView />
             <TextComplaintView />
+            <CommentSection comment={"comment"} />
+            <ComplaintEditor open={showEditor} />
             <div>
               <Stack spacing={2} direction="row" sx={{ m: 1 }}>
-                <Button
-                  startIcon={<ReplyIcon />}
-                  onClick={handleClick}
-                  variant="outlined"
-                  sx={{}}
-                >
-                  Reply
-                </Button>
+                <Tooltip title="reply to migrant" placement="bottom" arrow>
+                  <Button
+                    startIcon={<ReplyIcon />}
+                    onClick={handleClick}
+                    variant="outlined"
+                    sx={{}}
+                  >
+                    Reply
+                  </Button>
+                </Tooltip>  
 
                 {/* <StyledMuiButon color="#fff" backgroundColor="palevioletred">
                   Transcribe
                 </StyledMuiButon> */}
-
-                <Button
-                  startIcon={<ShortcutIcon />}
-                  variant="outlined"
-                  onClick={() => setOpenDialog(true)}
+                <Tooltip
+                  title="forward to ministry"
+                  placement="right-start"
+                  arrow
                 >
-                  Forward
-                </Button>
+                  <Button
+                    startIcon={<ShortcutIcon />}
+                    variant="outlined"
+                    onClick={() => setOpenDialog(true)}
+                  >
+                    Forward
+                  </Button>
+                </Tooltip>
               </Stack>
             </div>
           </Box>

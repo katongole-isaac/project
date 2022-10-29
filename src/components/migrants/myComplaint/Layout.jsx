@@ -4,16 +4,48 @@ import ComplaintList from "./ComplaintList";
 import SearchButtons from "./SearchButtons";
 import SearchComplaint from "./SearchComplaint";
 import Title from "./Title";
+import { useContext } from "react";
+import useFetch from "../../../useFetch";
+import Loading from "../../Loading";
+import PageError from "../../PageError";
+import AudioComplaint from "./AudioComplaint";
+import TextComplaint from "./TextComplaint";
+import VideoComplaint from "./VideoComplaint";
+import { UserState } from "../../../userContext";
+
+const MY_COMPLAINT_URL = `/complaints/views`;
 
 const MigrantLayout = () => {
-  const [state, setState] = useState("video");
-  
+  const [state, setState] = useState("all");
+
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchIsLoading, setSearchIsLoading] = useState(false);
+
+  const { user } = useContext(UserState);
+
+  const { results, errorDetails, isLoading } = useFetch(
+    `${MY_COMPLAINT_URL}?email=${user.email}`
+  );
+
+  if (isLoading) return <Loading />;
+
+  if (Object.keys(errorDetails)?.length !== 0) return <PageError />;
+
+  let complaints = results.res;
+  if (searchResults.length !== 0) complaints = searchResults;
+
+  if (searchIsLoading) return <Loading />;
+
   return (
-    <Container fullwidth sx={{ backgroundColor: "pink" }}>
+    <Container fullwidth sx={{ backgroundColor: "#FAFAFA" }}>
       <Title />
-      <SearchComplaint />
+      <SearchComplaint setSearchResults={setSearchResults} user={user} />
       <SearchButtons state={state} setState={setState} />
-      <ComplaintList state={state} setState={setState} />
+      <ComplaintList
+        state={state}
+        setState={setState}
+        complaints={complaints}
+      />
     </Container>
   );
 };
