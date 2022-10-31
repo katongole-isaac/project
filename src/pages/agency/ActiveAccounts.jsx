@@ -206,31 +206,8 @@ const ActiveAccounts = () => {
 
   console.log(results.accounts);
 
-  rows = [
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
+  rows = [...rows];
 
-    ...rows,
-  ];
   return (
     <>
       <ConfirmDelete open={confirmOpen} onDialog={deleteParam} />
@@ -247,7 +224,6 @@ const ActiveAccounts = () => {
           },
           display: "flex",
           width: "100%",
-          border: "1px solid red",
         }}
       >
         <UpdateError {...{ updateError, setUpdateError }} />

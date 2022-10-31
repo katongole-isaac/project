@@ -6,23 +6,25 @@ import useFetch from "../../../useFetch";
 import useMyCompStyles from "./styles";
 
 const SEARCH_URL = `/complaints/search`;
-const SearchComplaint = ({ setSearchResults, user }) => {
+const SearchComplaint = ({ setSearchResults, user, setSearchIsLoading }) => {
   const [search, setSearch] = useState("");
   const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+  // const [isLoading, setIsLoading] = useState(null);
   const [error, setError] = useState(null);
 
   const handleChange = async ({ target }) => {
     setSearch(target.value);
     if (search.match(/^\s+$/g)) return;
-    setIsLoading(true);
+    setSearchIsLoading(true);
     try {
       const resp = await authFetch.get(
         `${SEARCH_URL}?q=${search}&email=${user.email}`
       );
       console.log(`reason`, resp.data.res);
-      setSearchResults((prev) => [...prev, ...resp.data.res]);
+      setSearchResults((prev) => [...resp.data.res]);
+      setSearchIsLoading(false);
     } catch (ex) {
+      setSearchIsLoading(false);
       console.log(ex);
     }
   };

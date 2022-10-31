@@ -39,7 +39,7 @@ import { SingleComplaintView } from "./components/singleComplaintView/SingleComp
 import LetterPDFView from "./components/singleComplaintView/LetterPDFView";
 import { UserContext } from "./userContext";
 import ComplaintEditor from "./components/Editor/ComplaintEditor";
-
+import MinistryLetterComplaint from "./pages/ministry/pages/MinistryLetterComplaints";
 
 function App() {
   return (
@@ -87,6 +87,8 @@ function App() {
                 </AdminProtectedRoute>
               }
             >
+              <Route path="complaint" element={<MinistryLetterComplaint />} />
+
               <Route index element={<CreateUser />} />
               <Route path="create" element={<CreateUser />} />
               <Route path="accounts" element={<AgencyPaperAccount />} />

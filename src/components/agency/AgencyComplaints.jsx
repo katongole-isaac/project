@@ -14,6 +14,7 @@ import { DataGrid } from "@mui/x-data-grid";
 
 const drawerWidth = 240;
 const NO_CONTENT_MSG = `No complaints available`;
+const AGENCY_COMPLAINTS = `/complaints/agency/views`;
 const useAgencyComplaintStyles = makeStyles({
   page: {
     width: `calc(100vw - ${drawerWidth}px)`,
@@ -33,14 +34,16 @@ const AgencyComplaints = () => {
   //persisting data on the editor. we need to set 'letter' in localStorage and later we read it
   localStorage.setItem("letter", "");
 
-  const { isLoading, error, errorDetails, results } =
-    useFetch(`/complaints/view/all`);
+  const { isLoading, error, errorDetails, results } = useFetch(
+    `${AGENCY_COMPLAINTS}?agency=${user.name}`
+  );
 
   if (Object.keys(errorDetails).length !== 0) return <PageError />;
 
   if (isLoading) return <Loading />;
 
-  if (results.res?.length === 0) return <NoContent msg={NO_CONTENT_MSG} />;
+  if (results.res?.length === 0)
+    return <NoContent msg={NO_CONTENT_MSG} height="82vh" />;
 
   console.log(results);
   const columns = [
@@ -58,6 +61,7 @@ const AgencyComplaints = () => {
       id: 1,
     },
   ];
+
   return (
     <>
       <Box sx={{ flexGrow: 1, minHeight: "100%" }}>

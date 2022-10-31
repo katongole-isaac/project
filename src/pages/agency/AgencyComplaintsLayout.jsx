@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import AgencyComplaintList from "../../components/agency/AgencyComplaintList";
+import AgencyComplaints from "../../components/agency/AgencyComplaints";
 import AgencyComplaintSearch from "../../components/agency/AgencyComplaintSearch";
 import AgencyComplaintTitle from "../../components/agency/AgencyComplaintTitle";
 
@@ -14,9 +15,9 @@ const AgencyComplaintsLayout = () => {
           backgroundColor: "grey",
         }}
       >
-          <AgencyComplaintTitle />
-          <AgencyComplaintSearch />
-          <AgencyComplaintList />
+        <AgencyComplaintTitle />
+        <AgencyComplaintSearch />
+        <AgencyComplaints />
       </Box>
     </>
   );

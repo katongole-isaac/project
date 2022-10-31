@@ -9,9 +9,11 @@ import {
 import { useContext } from "react";
 import { UserState } from "../../userContext";
 import { SingleComplaintContext } from "./SingleComplaintView";
+import ReactHTMLParser from "react-html-parser";
+import Html from "react-pdf-html";
 
 const SYS_NAME = `Immigrant Mgt Sys`;
-const content = `  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed inventore adipisci aut error autem quae culpa pariatur quaerat, debitis ullam dolores laudantium? Ea nemo quisquam ex quae ullam officiis sed culpa rem a id aut accusantium debitis hic ipsam, iusto velit assumenda! Non veniam natus distinctio sunt nesciunt blanditiis eligendi vel eaque praesentium iste mollitia necessitatibus, facere inventore temporibus veritatis expedita in minus atque, adipisci impedit? Magni voluptas dolor hic, doloremque at mollitia magnam eum perferendis provident possimus ipsa eius laborum praesentium recusandae repellendus! Deserunt et magnam alias, maiores consequatur accusamus, animi odio quaerat mollitia ut, a repellat laudantium sit.`;
+
 //Letter fonts
 Font.register({
   family: "Times-Roman",
@@ -23,6 +25,7 @@ const styles = StyleSheet.create({
     display: "flex",
     padding: 30,
     fontSize: 12,
+    fontFamily: "Times-Roman",
   },
   view: {
     // border: "1px solid purple",
@@ -34,19 +37,38 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: 700,
   },
+  text: {
+    fontFamily: "Times-Roman",
+    fontSize: 12,
+  },
+  Viewletter: {
+    fontFamily: "Times-Roman",
+    padding: 2,
+  },
 });
 
 const firstLetterUpperCase = (str) => {
   return `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 };
 
-const LetterPDF = ({ user, res }) => {
+const LetterPDF = ({ user, res, letterText }) => {
   const { location, name, email, phone } = user;
-  
+  console.log(letterText);
   return (
     <Document producer={SYS_NAME} creator={SYS_NAME}>
       <Page size="A4" style={styles.page}>
+        {/* complaint ID */}
+        <View
+          style={{
+            ...styles.view,
+            display: "flex",
+            width: "100%",
+          }}
+        >
+          <Text render={() => `ComplaintID:  ${res._id}`} />
+        </View>
         {/* Agencyc section address */}
+
         <View style={styles.view}>
           <Text render={() => `${firstLetterUpperCase(name)}`} />
           <Text render={() => `${firstLetterUpperCase(location)}`} />
@@ -80,18 +102,24 @@ const LetterPDF = ({ user, res }) => {
           <Text
             style={{ ...styles.reSection }}
             render={() =>
-              `RE: Complaint for a ${res.reason} which was issued by ${res.fullname} `
+              `RE: Complaint for a ${res.reason} which was issued by ${res.fullname}`
             }
           />
         </View>
         {/* letter context */}
-        <View style={styles.view}>
-          <Text render={() => `${content}`} />
-        </View>
 
-        <View style={styles.view}>
+        {letterText && (
+          <View style={styles.view}>
+            <Html style={styles.text}> {letterText} </Html>
+          </View>
+        )}
+        {/* <Text render={() => `${ReactHTMLParser(letterText)}`} />
+         */}
+
+        {/* <View style={styles.view}>
           <Text render={() => `${content.substring(1, 50)}`} />
-        </View>
+        </View> */}
+
         {/* signature part */}
         <View style={styles.view}>
           <Text render={() => `Your sincerely`} />

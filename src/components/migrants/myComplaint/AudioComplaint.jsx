@@ -56,7 +56,6 @@ const AudioCard = ({ _id, reason, sent, audioUrl, status }) => {
               </Typography>
               <Box sx={{ m: 1, flexGrow: 1 }}>
                 <AudioPlayer
-                  autoPlay
                   src={`${AUDIO_URL}${audioUrl.replace("uploads/", "")}`}
                   onPlay={(e) => console.log("onPlay")}
                 />

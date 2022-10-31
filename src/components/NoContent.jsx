@@ -3,12 +3,12 @@ import { Stack } from "@mui/system";
 import { Link } from "react-router-dom";
 import StyledReactDomLink from "./StyledReactDomLink";
 
-const NoContent = ({ msg, addAccount, pathToAddAccPage }) => {
+const NoContent = ({ msg, addAccount, pathToAddAccPage, height }) => {
   return (
     <>
       <Grid
         container
-        sx={{ height: "90%", backgroundColor: "#f8f9fa",mt:1 }}
+        sx={{ height: height || "90%", backgroundColor: "#f8f9fa", mt: 1 }}
         justifyContent="center"
       >
         <Grid

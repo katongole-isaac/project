@@ -22,7 +22,7 @@ const MinistryDrawer = () => {
   const navLink = [
     {
       name: "Complaints",
-      path: "/ministry/dashboard",
+      path: "/ministry/dashboard/complaint",
       icon: `${(<LocalPostOfficeIcon />)}`,
     },
     {

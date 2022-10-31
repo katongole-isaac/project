@@ -9,11 +9,15 @@ import {
   VolumeMenuButton,
 } from "video-react";
 import "video-react/dist/video-react.css";
-	const VIDEO_URL = `http://localhost:3001/api/`;
+const VIDEO_URL = `http://localhost:3001/api/`;
 
-const VideoPlayer = ({videoUrl}) => {
+const VideoPlayer = ({ videoUrl, width, height }) => {
   return (
-    <Player poster="/assets/poster.png" height={"100%"}>
+    <Player
+      poster="/assets/poster.png"
+      height={height || "100%"}
+      width={width || "100%"}
+    >
       <source src={`${VIDEO_URL}${videoUrl}`} />
       {/* <source src="http://mirrorblender.top-ix.org/movies/sintel-1024-surround.mp4" /> */}
 

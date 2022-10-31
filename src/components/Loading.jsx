@@ -15,7 +15,7 @@ const Loading = () => {
           textAlign="center"
           sx={{ position: "absolute", top: "30%" }}
         >
-          <CircularProgress color="inherit" sx={{color: 'white'}} />
+          <CircularProgress color="inherit" sx={{ color: "black" }} />
         </Grid>
       </Grid>
     </>

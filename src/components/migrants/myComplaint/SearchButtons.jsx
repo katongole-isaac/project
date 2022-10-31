@@ -12,32 +12,32 @@ const SearchButtons = ({ state, setState }) => {
         <Grid item xs={12} sm={10} md={6} sx={{ m: 1 }}>
           <Stack direction="row" spacing={2} justifyContent="center">
             <StyledSearchButton
-              variant="outlined"
+              variant={state === "all" ? "contained" : "outlined"}
               onClick={() => setState("all")}
-              size="medium"
+              size="small"
               state={state === "all" ? true : false}
             >
               All
             </StyledSearchButton>
             <StyledSearchButton
-              variant="outlined"
+              variant={state === "video" ? "contained" : "outlined"}
               onClick={() => setState("video")}
-              size="medium"
+              size="small"
               state={state === "video" ? true : false}
             >
               video
             </StyledSearchButton>
             <StyledSearchButton
-              size="large"
-              variant="outlined"
+              variant={state === "text" ? "contained" : "outlined"}
+              size="small"
               onClick={() => setState("text")}
               state={state === "text" ? true : false}
             >
               text
             </StyledSearchButton>
             <StyledSearchButton
-              size="medium"
-              variant="outlined"
+              variant={state === "audio" ? "contained" : "outlined"}
+              size="small"
               onClick={() => setState("audio")}
               state={state === "audio" ? true : false}
             >

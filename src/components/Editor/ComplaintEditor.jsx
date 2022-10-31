@@ -4,8 +4,24 @@ import { useRef, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import ReactHTMLParser from "react-html-parser";
 import { Box, Button, Typography } from "@mui/material";
-const ComplaintEditor = ({ open, comment, setComment }) => {
+import authFetch from "../../authFetch";
+import LoadingButton from "@mui/lab/LoadingButton";
+
+const UPDATE_COMMENT_URL = `/complaints/comment`;
+const ComplaintEditor = ({
+  open,
+  comment,
+  setComment,
+  _setComment,
+  user,
+  setOnError,
+  complaintId,
+  setShowEditor,
+}) => {
   const [reply, setReply] = useState("");
+  const [data, setData] = useState("");
+  const [loadingBtn, setLoadingBtn] = useState(false);
+
   const text = useRef(null);
 
   const [showErr, setShowErr] = useState(false);
@@ -14,26 +30,48 @@ const ComplaintEditor = ({ open, comment, setComment }) => {
     const data = editor.getData();
     console.log({ e, editor, data });
     setReply(data);
+    setComment((prev) => ({
+      ...prev,
+      msg: reply.trim(),
+      author: "Me",
+    }));
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     ReactHTMLParser(reply);
-    if (text.current.textContent.length < 60) {
+    if (reply.trim().length < 200) {
       setShowErr(true);
       return;
     }
-    console.log(reply);
+    setComment((prev) => ({ ...prev, date: new Date() }));
+    try {
+      setLoadingBtn(true);
+
+      const resp = await authFetch.post(UPDATE_COMMENT_URL, {
+        ...comment,
+        date: Date.now(),
+        id: complaintId,
+      });
+      if (resp.status >= 200 && resp.status <= 299) {
+        _setComment((prev) => [...resp.data.comment.comments]);
+        setLoadingBtn(false);
+        setShowEditor(false);
+        console.log(resp.data.comment.comments);
+      }
+    } catch (ex) {
+      console.log(ex);
+      setOnError(ex);
+      setLoadingBtn(false);
+    }
   };
 
   return (
     <>
       {open && (
         <>
-          <div ref={text} style={{ opacity: 0 }}>
-            {ReactHTMLParser(reply)}
-          </div>
           <Box sx={{ p: 1 }}>
             <CKEditor
+              data={data}
               editor={ClassicEditor}
               onChange={(event, editor) => handleChange(event, editor)}
               //   onFocus={(event, editor) => handleChange(event, editor)}
@@ -53,14 +91,16 @@ const ComplaintEditor = ({ open, comment, setComment }) => {
               placement="right-start"
               arrow
             >
-              <Button
+              <LoadingButton
+                loading={loadingBtn}
                 variant="contained"
                 size="small"
+                loadingIndicator="Attaching..."
                 sx={{ textTransform: "lowercase", mt: 1, mb: 1 }}
                 onClick={handleSend}
               >
                 Attach a comment
-              </Button>
+              </LoadingButton>
             </Tooltip>
           </Box>
         </>

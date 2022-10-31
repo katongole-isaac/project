@@ -33,6 +33,7 @@ import { UserState } from "../../userContext";
 import ComplaintEditor from "../Editor/ComplaintEditor";
 import CommentSection from "./CommentSection";
 import { StyledTooltip } from "../Styled/StyledTooltip";
+import AddedComment from "./AddedComment";
 
 const noContentMsg = "No content available";
 const SingleComplaintContext = React.createContext();
@@ -56,7 +57,15 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
   const { complaintId } = useParams();
   const [pageErrorMsg, setPageErrorMsg] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
-  const [comment, setComment] = useState(null);
+  const [onError, setOnError] = useState(null);
+  const [showComments, setShowComments] = useState(false);
+
+  const [comment, setComment] = useState({
+    msg: "",
+    date: null,
+    author: "",
+  });
+  const [_comment, _setComment] = useState([]); // for displaying the date after being saved
 
   const { isLoading, errorDetails, results, error } = useFetch(
     `${COMPLAINT_URL}${complaintId}`
@@ -84,12 +93,12 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
   if (Object.keys(errorDetails).length !== 0)
     return <PageError msg={pageErrorMsg} path="../" />;
 
-  const { res, profilePic } = results;
-
+  const { res, profilePic, comments } = results;
+  console.log(res);
   return (
     <>
       <SingleComplaintContext.Provider
-        value={{ res, classes, profilePic, user }}
+        value={{ res, classes, profilePic, user, comments, _comment }}
       >
         <Container sx={{ height: "100%" }}>
           <Box>
@@ -100,8 +109,24 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
             <VideoComplaintView />
             <AudioComplaintView />
             <TextComplaintView />
-            <CommentSection comment={"comment"} />
-            <ComplaintEditor open={showEditor} />
+            {comments && (
+              <Button onClick={() => setShowComments(!showComments)}>
+                show Comments
+              </Button>
+            )}
+
+            {showComments && <CommentSection />}
+            <AddedComment />
+            <ComplaintEditor
+              open={showEditor}
+              setComment={setComment}
+              user={user}
+              comment={comment}
+              complaintId={complaintId}
+              setOnError={setOnError}
+              _setComment={_setComment}
+              setShowEditor={setShowEditor}
+            />
             <div>
               <Stack spacing={2} direction="row" sx={{ m: 1 }}>
                 <Tooltip title="reply to migrant" placement="bottom" arrow>
@@ -113,7 +138,7 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
                   >
                     Reply
                   </Button>
-                </Tooltip>  
+                </Tooltip>
 
                 {/* <StyledMuiButon color="#fff" backgroundColor="palevioletred">
                   Transcribe
@@ -141,40 +166,3 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
 };
 
 export { SingleComplaintView, SingleComplaintContext };
-
-const GridElem = ({ children, editor }) => {
-  return (
-    <Grid
-      item
-      sm={12}
-      md={editor ? 12 : 12}
-      flexGrow={1}
-      padding={1}
-      spacing={1}
-      sx={{ height: "max-content" }}
-    >
-      {children}
-    </Grid>
-  );
-};
-
-const EditorComp = ({ setLetter, letter }) => {
-  return (
-    <>
-      <Masonry columns={2} spacing={2}>
-        <div>
-          <Editor setLetter={setLetter} />
-          <Divider orientation="vertical" />
-        </div>
-        <div>
-          <Divider />
-          <Typography variant="h6" align="center">
-            Preview
-          </Typography>
-          <div>{ReactHtmlParser(letter)}</div>
-          <Divider />
-        </div>
-      </Masonry>
-    </>
-  );
-};

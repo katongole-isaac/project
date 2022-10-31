@@ -1,40 +1,24 @@
-import { Grid, Stack } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import { useContext } from "react";
 import ReactPlayer from "react-player";
+import VideoPlayer from "../migrants/myComplaint/VideoPlayer";
 import { SingleComplaintContext } from "./SingleComplaintView";
 
+const VIDEO_URL = `http://localhost:3001/api/`;
 export default function VideoComplaintView() {
   const { res, classes } = useContext(SingleComplaintContext);
-
+  console.log(`${VIDEO_URL}${res.videoUrl}`);
   return (
     <>
       {res.videoUrl && (
         <Grid container>
-          <Stack spacing={2} sx={{ width: "100%" }}>
-            {/* <video
-              src={`${BASE_URL}/api/uploads/blob1663871487156`}
-              controls
-              width="100%"
-            ></video> */}
-            <ReactPlayer
-              url="http://localhost:3001/api/uploads/blob1663871487156"
-              config={{
-                file: {
-                  attributes: {
-                    crossOrigin: "true",
-                  },
-                },
-              }}
-              controls
-            />
-            {/* {showEditor && (
-              <Grid container spacing={1}>
-                <Grid item sm={12} md={12} justifyContent="center">
-                  <EditorComp letter={letter} setLetter={setLetter} />
-                </Grid>
-              </Grid>
-            )} */}
-          </Stack>
+          {/* <Stack spacing={2} sx={{ width: "100%", }}> */}
+          <Grid item xs={12} sm={12} md={8} lg={6}>
+            <Box sx={{ width: "100%", height: "50%" }}>
+              <VideoPlayer videoUrl={res.videoUrl} height="50%" />
+            </Box>
+          </Grid>
+          {/* </Stack> */}
         </Grid>
       )}
     </>

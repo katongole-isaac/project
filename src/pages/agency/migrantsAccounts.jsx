@@ -146,7 +146,7 @@ const MigrantAccounts = () => {
 
   console.log(errorDetails);
   if (results.accounts === "undefined" || results.accounts.length === 0)
-    return <NoContent msg={noContentMsg} />;
+    return <NoContent msg={noContentMsg} height="90vh" />;
 
   const rows = results.accounts;
 
