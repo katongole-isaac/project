@@ -7,7 +7,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
+const INDIVIDUAL_LETTER_URL = `http://localhost:3001/api/letters/view`;
+const COMPLAINT_URL = `/ministry/dashboard/complaints/`;
 const MinistryLetterCard = ({
   createdAt,
   from,
@@ -16,7 +19,9 @@ const MinistryLetterCard = ({
   viewed,
   comment,
   color,
+  complaintId,
 }) => {
+  console.log(complaintId);
   return (
     <>
       <ListItem disablePadding sx={{ p: 0.4 }}>
@@ -46,13 +51,20 @@ const MinistryLetterCard = ({
           >
             <Stack direction="row" spacing={2}>
               <Chip
-                label={letters[0]}
+                clickable
+                // href={`${}`}
+                onClick={() => {
+                  window.open(`${INDIVIDUAL_LETTER_URL}?path=${letters[0]}`);
+                }}
+                label={letters[0].replace("letters/", " ")}
                 variant="outlined"
-                sx={{ width: "300px", color }}
+                sx={{ width: "300px" }}
               />
-              <Typography variant="body2" sx={{ color }}>
-                complaint of {migrantName} <strong> |</strong> {from}
-              </Typography>
+              <Link to={`${COMPLAINT_URL}${complaintId}`}>
+                <Typography variant="body2" sx={{ color }}>
+                  complaint of {migrantName} <strong> |</strong> {from}
+                </Typography>
+              </Link>
             </Stack>
 
             <Typography variant="body2" sx={{ color }}>

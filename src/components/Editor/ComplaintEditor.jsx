@@ -1,6 +1,6 @@
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import ReactHTMLParser from "react-html-parser";
 import { Box, Button, Typography } from "@mui/material";
@@ -17,12 +17,18 @@ const ComplaintEditor = ({
   setOnError,
   complaintId,
   setShowEditor,
+  isMinistry,
 }) => {
   const [reply, setReply] = useState("");
   const [data, setData] = useState("");
   const [loadingBtn, setLoadingBtn] = useState(false);
-
+  let username;
   const text = useRef(null);
+
+  if (isMinistry) username = user.username; //if ministry then username = 'Ministry' else 
+  else username = user.name
+
+  console.log(username)
 
   const [showErr, setShowErr] = useState(false);
   const handleChange = (e, editor) => {
@@ -33,7 +39,7 @@ const ComplaintEditor = ({
     setComment((prev) => ({
       ...prev,
       msg: reply.trim(),
-      author: "Me",
+      author:  username,
     }));
   };
 

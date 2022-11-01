@@ -12,6 +12,7 @@ import { Alert, Button, FormLabel, TextField, Typography } from "@mui/material";
 import { password, email } from "../validate";
 import { useEffect, useContext } from "react";
 import { loginUser, UserState } from "../userContext";
+import LoginLoading from "../components/LoginLoading";
 
 const url = "http://localhost:3001/api/user/login";
 
@@ -34,6 +35,7 @@ const Login = () => {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const accounts = ["migrant", "agency", "ministry"];
@@ -75,6 +77,7 @@ const Login = () => {
 
   //Go to , redirection, for successfull users. login
   const goTo = async (url, data, path) => {
+    setIsLoading(true);
     try {
       const res = await loginUser(url, data);
       localStorage.setItem(`${res.data.user}`, res.data.token);
@@ -83,18 +86,22 @@ const Login = () => {
       dispatch({ type: "LOGIN", id });
 
       if (res.data.status && res.data.status === "pending") {
+        setIsLoading(false);
         navigate("/accounts/pending");
         return;
       }
 
+      setIsLoading(false);
       navigate(path);
 
       return;
     } catch (ex) {
       if (ex.code === "ERR_NETWORK") {
+        setIsLoading(false);
         setError(ex.message);
         return;
       }
+      setIsLoading(false);
       setError(ex.response.data.message);
       console.log(ex);
       return;
@@ -138,80 +145,83 @@ const Login = () => {
   const classes = useStyles();
   const { page, input } = classes;
   return (
-    <Container className={page} maxWidth="false" disableGutters>
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="flex-start"
-        direction="row"
-        spacing={2}
-        sx={{ maxHeight: "100vh", height: "88vh" }}
-      >
-        <Grid item xs={10} sm={8} md={5} lg={3}>
-          <Paper elevation={3} sx={{ marginTop: 12 }}>
-            {error && <Alert severity="error"> {error} </Alert>}
-            <Typography variant="h4" align="center" sx={{ color: "#0C2D48" }}>
-              Login
-            </Typography>
-            <hr />
-            <form action="" noValidate autoComplete="off">
-              <FormControl fullWidth>
-                <InputLabel id="acc" sx={{ margin: 1 }}>
-                  Account Type
-                </InputLabel>
-                <Select
-                  value={accType}
-                  label="Account Type"
-                  defaultValue={accType}
-                  labelId="acc"
-                  name="account"
+    <>
+      <LoginLoading isLoading={isLoading} setIsLoading={setIsLoading} />
+      <Container className={page} maxWidth="false" disableGutters>
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="flex-start"
+          direction="row"
+          spacing={2}
+          sx={{ maxHeight: "100vh", height: "88vh" }}
+        >
+          <Grid item xs={10} sm={8} md={5} lg={3}>
+            <Paper elevation={3} sx={{ marginTop: 12 }}>
+              {error && <Alert severity="error"> {error} </Alert>}
+              <Typography variant="h4" align="center" sx={{ color: "#0C2D48" }}>
+                Login
+              </Typography>
+              <hr />
+              <form action="" noValidate autoComplete="off">
+                <FormControl fullWidth>
+                  <InputLabel id="acc" sx={{ margin: 1 }}>
+                    Account Type
+                  </InputLabel>
+                  <Select
+                    value={accType}
+                    label="Account Type"
+                    defaultValue={accType}
+                    labelId="acc"
+                    name="account"
+                    sx={{ margin: 1 }}
+                    size="small"
+                    onChange={handleSelect}
+                  >
+                    <MenuItem value="migrant"> Migrant</MenuItem>
+                    <MenuItem value="agency"> Agency</MenuItem>
+                    <MenuItem value="ministry"> Ministry</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                  <TextField
+                    label="Email"
+                    value={data.email}
+                    onChange={handleChange}
+                    name="email"
+                    size="small"
+                    error={emailError}
+                    sx={{ width: "97%", ml: 1, mr: 2 }}
+                  />
+                </FormControl>
+                <br />
+                <FormControl fullWidth margin="normal">
+                  <TextField
+                    label="password"
+                    type="password"
+                    value={data.password}
+                    name="password"
+                    size="small"
+                    error={passwordError}
+                    onChange={handleChange}
+                    sx={{ width: "97%", ml: 1, mr: 2 }}
+                  />
+                </FormControl>
+                <Button
+                  type="sumbit"
+                  variant="contained"
+                  onClick={handleSubmit}
+                  size="small"
                   sx={{ margin: 1 }}
-                  size="small"
-                  onChange={handleSelect}
                 >
-                  <MenuItem value="migrant"> Migrant</MenuItem>
-                  <MenuItem value="agency"> Agency</MenuItem>
-                  <MenuItem value="ministry"> Ministry</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl fullWidth margin="normal">
-                <TextField
-                  label="Email"
-                  value={data.email}
-                  onChange={handleChange}
-                  name="email"
-                  size="small"
-                  error={emailError}
-                  sx={{ width: "97%", ml: 1, mr: 2 }}
-                />
-              </FormControl>
-              <br />
-              <FormControl fullWidth margin="normal">
-                <TextField
-                  label="password"
-                  type="password"
-                  value={data.password}
-                  name="password"
-                  size="small"
-                  error={passwordError}
-                  onChange={handleChange}
-                  sx={{ width: "97%", ml: 1, mr: 2 }}
-                />
-              </FormControl>
-              <Button
-                type="sumbit"
-                variant="contained"
-                onClick={handleSubmit}
-                size="small"
-                sx={{ margin: 1 }}
-              >
-                login
-              </Button>
-            </form>
-          </Paper>
+                  login
+                </Button>
+              </form>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   );
 };
 

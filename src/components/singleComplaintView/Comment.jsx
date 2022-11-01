@@ -12,7 +12,7 @@ const Comment = ({ comment, commentAuthor, commentDate }) => {
     <>
       <Box className={classes.commentContainer}>
         <Grid container spacing={1} sx={{ padding: 2 }}>
-          <Grid item xs={12} sm={12} md={3} lg={2}>
+          <Grid item xs={12} sm={12} md={4} lg={3}>
             <Stack>
               <Typography variant="body2" sx={{ fontWeight: 600 }}>
                 {commentDate ? new Date(commentDate).toDateString() : ""}
@@ -22,7 +22,7 @@ const Comment = ({ comment, commentAuthor, commentDate }) => {
               </Typography>
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={12} md={8} lg={9}>
+          <Grid item xs={12} sm={12} md={7} lg={8}>
             <Typography variant="body2">{ReactHTMLParser(comment)}</Typography>
           </Grid>
         </Grid>

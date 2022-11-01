@@ -14,7 +14,7 @@ const AgencyLayout = () => {
       <div style={{ height: "64px" }}></div>
 
       <Box sx={{ display: "flex" }}>
-        <AgencySideNav />
+        <AgencySideNav  />
         <div style={{ overflowX: "hidden", flexGrow: 1, overflowY: "hidden" }}>
           <Outlet />
         </div>

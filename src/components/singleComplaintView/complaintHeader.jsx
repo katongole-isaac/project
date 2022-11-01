@@ -6,7 +6,7 @@ const ComplaintHeader = () => {
   return (
     <>
       <Box sx={{ width: "100%", mt: 1 }}>
-        <Link to="/agency">
+        <Link to="../">
           <IconButton>
             <KeyboardBackspaceIcon />
           </IconButton>

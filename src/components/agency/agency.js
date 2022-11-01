@@ -3,6 +3,9 @@ import { makeStyles } from "@mui/styles";
 const drawerWidth = 240;
 const containerMarginTop = 65;
 const useAgencyStyles = makeStyles({
+  appBar: {
+    width: `calc(100% - ${drawerWidth}px)`,
+  },
   title: {
     flexGrow: 1,
   },

@@ -21,7 +21,13 @@ import authFetch from "../../authFetch";
 import { UserState } from "../../userContext";
 
 const LETTER_UPLOAD = `/letter/post`;
-export default function LetterSection({ open, setOpen }) {
+const LETTER_WORDS_MIN_LIMIT = 100;
+export default function LetterSection({
+  open,
+  setOpen,
+  setOnLetterSend,
+  setOnLetterError,
+}) {
   const [doc, setDoc] = useState(null);
   const [letterText, setLetterText] = useState("");
   const { user, res } = useContext(SingleComplaintContext);
@@ -38,18 +44,22 @@ export default function LetterSection({ open, setOpen }) {
     const doc = await getPDF();
     const fd = new FormData();
     console.log(doc);
-    fd.append("letter", doc, res.fullname);
-    fd.append("status", res.status);
-    fd.append("email", user.email);
-    fd.append("id", res._id);
+    fd.append("letter", doc, res.fullname); //fullname of the migrant
+    fd.append("status", res.status); //complaint status
+    fd.append("email", user.email); // agency email
+    fd.append("id", res._id); //complaint Id
     try {
       const resp = await authFetch.post(LETTER_UPLOAD, fd);
-      if (resp.status >= 200 && resp.status <= 299){
+      if (resp.status >= 200 && resp.status <= 299) {
         console.log(doc);
-        
-      } 
+        setOnLetterSend(true); // showing snackbar
+        setTimeout(() => {
+          setOpen(false);
+        }, 1500);
+      }
     } catch (ex) {
-
+      console.log(ex);
+      setOnLetterError(true); // show snackbar on Error
     }
   };
 
@@ -86,20 +96,28 @@ export default function LetterSection({ open, setOpen }) {
               Compose letter for this Complaint
             </Typography>
 
-            <Box sx={{ "& a": { textDecoration: "none", color: "#ffF" } }}>
-              <PDFDownloadLink
-                document={
-                  <LetterPDF user={user} res={res} letterText={letterText} />
-                }
-              >
-                <Button autoFocus color="inherit">
-                  Download
+            {letterText.length > LETTER_WORDS_MIN_LIMIT && (
+              <>
+                <Box sx={{ "& a": { textDecoration: "none", color: "#ffF" } }}>
+                  <PDFDownloadLink
+                    document={
+                      <LetterPDF
+                        user={user}
+                        res={res}
+                        letterText={letterText}
+                      />
+                    }
+                  >
+                    <Button autoFocus color="inherit">
+                      Download
+                    </Button>
+                  </PDFDownloadLink>
+                </Box>
+                <Button autoFocus color="inherit" onClick={handleSend}>
+                  send
                 </Button>
-              </PDFDownloadLink>
-            </Box>
-            <Button autoFocus color="inherit" onClick={handleSend}>
-              send
-            </Button>
+              </>
+            )}
           </Toolbar>
         </AppBar>
         <Grid

@@ -1,25 +1,23 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { useContext } from "react";
+import ReactAudioPlayer from "react-audio-player";
 import { SingleComplaintContext } from "./SingleComplaintView";
+
+const AUDIO_URL = `http://localhost:3001/api/uploads/audio/`;
 
 export default function AudioComplaintView() {
   const { res, classses } = useContext(SingleComplaintContext);
+  console.log(res);
   return (
     <>
       {res.audioUrl && (
-        <Grid container spacing={1}>
-          {/* <GridElem editor={showEditor}>
-              <audio controls></audio>
-            </GridElem> */}
-
-          {/* {showEditor && (
-              <Grid container spacing={1}>
-                <Grid item sm={12} md={12} justifyContent="center">
-                  <EditorComp letter={letter} setLetter={setLetter} />
-                </Grid>
-              </Grid>
-            )} */}
-        </Grid>
+        <Box sx={{ p: 1, display: "flex" }}>
+          <ReactAudioPlayer
+            src={`${AUDIO_URL}${res.audioUrl.replace("uploads/", "")}`}
+            onPlay={(e) => console.log("onPlay")}
+            controls
+          />
+        </Box>
       )}
     </>
   );

@@ -34,6 +34,7 @@ import ComplaintEditor from "../Editor/ComplaintEditor";
 import CommentSection from "./CommentSection";
 import { StyledTooltip } from "../Styled/StyledTooltip";
 import AddedComment from "./AddedComment";
+import SnackBarLetter from "../SnackBarLetter";
 
 const noContentMsg = "No content available";
 const SingleComplaintContext = React.createContext();
@@ -54,11 +55,15 @@ const COMPLAINT_URL = `/complaints/views/`;
 const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
   const { user } = useContext(UserState);
 
+  const [isMinistry, setIsMinistry] = useState(user?.username ? true : false); //checking if its a ministry account
+
   const { complaintId } = useParams();
   const [pageErrorMsg, setPageErrorMsg] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [onError, setOnError] = useState(null);
   const [showComments, setShowComments] = useState(false);
+  const [onLetterSend, setOnLetterSend] = useState(false);
+  const [onLetterError, setOnLetterError] = useState(false);
 
   const [comment, setComment] = useState({
     msg: "",
@@ -94,72 +99,102 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
     return <PageError msg={pageErrorMsg} path="../" />;
 
   const { res, profilePic, comments } = results;
-  console.log(res);
+  console.log(onLetterError);
   return (
     <>
       <SingleComplaintContext.Provider
-        value={{ res, classes, profilePic, user, comments, _comment }}
+        value={{
+          res,
+          classes,
+          profilePic,
+          user,
+          comments,
+          _comment,
+          isMinistry,
+        }}
       >
-        <Container sx={{ height: "100%" }}>
-          <Box>
-            <LetterSection open={openDialog} setOpen={setOpenDialog} />
-            <ComplaintHeader />
-            <ComplaintTitleSection />
-            <ComplaintBioInfo />
-            <VideoComplaintView />
-            <AudioComplaintView />
-            <TextComplaintView />
-            {comments && (
-              <Button onClick={() => setShowComments(!showComments)}>
-                show Comments
-              </Button>
-            )}
+        <Box
+          sx={{
+            backgroundColor: "#FAFAFA",
+            minHeight: "91vh",
+          }}
+        >
+          <SnackBarLetter
+            onLetterSend={onLetterSend}
+            setOnLetterSend={setOnLetterSend}
+            onLetterError={onLetterError}
+          />
+          <Container sx={{ height: "100%" }}>
+            <Box>
+              <LetterSection
+                open={openDialog}
+                setOpen={setOpenDialog}
+                setOnLetterSend={setOnLetterSend}
+                setOnLetterError={setOnLetterError}
+              />
+              <ComplaintHeader />
+              <ComplaintTitleSection />
+              <ComplaintBioInfo />
+              <VideoComplaintView />
+              <AudioComplaintView />
+              <TextComplaintView />
+              {comments && (
+                <Button onClick={() => setShowComments(!showComments)}>
+                  show Comments
+                </Button>
+              )}
 
-            {showComments && <CommentSection />}
-            <AddedComment />
-            <ComplaintEditor
-              open={showEditor}
-              setComment={setComment}
-              user={user}
-              comment={comment}
-              complaintId={complaintId}
-              setOnError={setOnError}
-              _setComment={_setComment}
-              setShowEditor={setShowEditor}
-            />
-            <div>
-              <Stack spacing={2} direction="row" sx={{ m: 1 }}>
-                <Tooltip title="reply to migrant" placement="bottom" arrow>
-                  <Button
-                    startIcon={<ReplyIcon />}
-                    onClick={handleClick}
-                    variant="outlined"
-                    sx={{}}
-                  >
-                    Reply
-                  </Button>
-                </Tooltip>
+              {showComments && <CommentSection />}
+              <AddedComment />
+              <ComplaintEditor
+                open={showEditor}
+                setComment={setComment}
+                user={user}
+                comment={comment}
+                complaintId={complaintId}
+                setOnError={setOnError}
+                _setComment={_setComment}
+                setShowEditor={setShowEditor}
+                isMinistry={isMinistry}
+              />
+              <div>
+                <Stack spacing={2} direction="row" sx={{ m: 1 }}>
+                  <Tooltip title="reply to migrant" placement="bottom" arrow>
+                    <Button
+                      startIcon={<ReplyIcon />}
+                      onClick={handleClick}
+                      variant="outlined"
+                      sx={{}}
+                    >
+                      Reply
+                    </Button>
+                  </Tooltip>
 
-                {/* <StyledMuiButon color="#fff" backgroundColor="palevioletred">
+                  {/* <StyledMuiButon color="#fff" backgroundColor="palevioletred">
                   Transcribe
                 </StyledMuiButon> */}
-                <Tooltip
-                  title="forward to ministry"
-                  placement="right-start"
-                  arrow
-                >
-                  <Button
-                    startIcon={<ShortcutIcon />}
-                    variant="outlined"
-                    onClick={() => setOpenDialog(true)}
-                  >
-                    Forward
-                  </Button>
-                </Tooltip>
-              </Stack>
-            </div>
-          </Box>
-        </Container>
+
+                  {/* Dont show this button if isMinistry === true */}
+                  {!isMinistry && (
+                    <Tooltip
+                      title="forward to ministry"
+                      placement="right-start"
+                      arrow
+                    >
+                      <Button
+                        startIcon={<ShortcutIcon />}
+                        variant="outlined"
+                        onClick={() => setOpenDialog(true)}
+                      >
+                        Forward
+                      </Button>
+                    </Tooltip>
+                  )}
+                </Stack>
+              </div>
+            </Box>
+          </Container>
+        </Box>
       </SingleComplaintContext.Provider>
     </>
   );

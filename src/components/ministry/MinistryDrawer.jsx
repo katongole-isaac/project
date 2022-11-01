@@ -21,6 +21,11 @@ const MinistryDrawer = () => {
   const classes = useMinistryStyles();
   const navLink = [
     {
+      name: "Dashboard",
+      path: "/ministry/dashboard",
+      icon: `${(<LocalPostOfficeIcon />)}`,
+    },
+    {
       name: "Complaints",
       path: "/ministry/dashboard/complaint",
       icon: `${(<LocalPostOfficeIcon />)}`,

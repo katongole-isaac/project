@@ -31,7 +31,6 @@ const UserAction = ({
 			}
 		} catch (ex) {
 			console.log(ex);
-			
 			setUpdateError((prev) => {
 				return {
 					...prev,

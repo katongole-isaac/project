@@ -88,8 +88,11 @@ function App() {
               }
             >
               <Route path="complaint" element={<MinistryLetterComplaint />} />
-
               <Route index element={<CreateUser />} />
+              <Route
+                path="complaints/:complaintId"
+                element={<SingleComplaintView />}
+              />
               <Route path="create" element={<CreateUser />} />
               <Route path="accounts" element={<AgencyPaperAccount />} />
             </Route>

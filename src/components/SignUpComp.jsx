@@ -173,6 +173,7 @@ const SignUpComp = ({
                     name="firstname"
                     size="small"
                     error={firstNameError}
+                    helperText={firstNameError && "invalid name format... "}
                   />
                 </FormControl>
                 <FormControl sx={{ marginLeft: 3 }}>
@@ -184,6 +185,7 @@ const SignUpComp = ({
                     name="lastname"
                     value={lastname}
                     error={lastNameError}
+                    helperText={lastNameError && "invalid name format... "}
                   />
                 </FormControl>
               </div>
@@ -209,6 +211,7 @@ const SignUpComp = ({
                   size="small"
                   type="tel"
                   error={phoneError}
+                  helperText={phoneError && "Invalid phone number format"}
                 />
               </FormControl>
               <FormControl fullWidth sx={{ margin: 1 }}>
@@ -221,6 +224,10 @@ const SignUpComp = ({
                   size="small"
                   type="password"
                   error={passwordError}
+                  helperText={
+                    passwordError &&
+                    "password too weak.. you can mix char(s),digits,symbols  "
+                  }
                 />
               </FormControl>
               <FormControl fullWidth sx={{ margin: 1 }}>

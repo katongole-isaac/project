@@ -16,7 +16,7 @@ const LetterEditor = ({ setLetterText }) => {
   };
 
   const handleCommit = () => {
-    if (_data.length < 150) {
+    if (_data.length < 100) {
       setTooShortText(true);
       return;
     }
