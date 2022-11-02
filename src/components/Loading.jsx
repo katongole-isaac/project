@@ -1,4 +1,5 @@
 import CircularProgress from "@mui/material/CircularProgress";
+import Blink from "react-blink-text";
 import { Grid } from "@mui/material";
 const Loading = () => {
   return (
@@ -15,7 +16,11 @@ const Loading = () => {
           textAlign="center"
           sx={{ position: "absolute", top: "30%" }}
         >
-          <CircularProgress color="inherit" sx={{ color: "black" }} />
+          {/* <CircularProgress color="inherit" sx={{ color: "black" }} />
+           */}
+          <Blink color="black" text="Loading..." fontSize="20">
+            Testing the Blink
+          </Blink>
         </Grid>
       </Grid>
     </>

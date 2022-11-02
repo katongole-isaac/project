@@ -16,7 +16,7 @@ import MinistryDash from "./components/ministry/MinistryDash";
 import StopWatch from "./pages/stopwatch";
 import Accounts from "./pages/ministry/pages/Accounts";
 import CreateUser from "./pages/ministry/pages/CreateUser";
-import AgencyLayout from "./components/agency/AgencyLayout";
+import { AgencyLayout } from "./components/agency/AgencyLayout";
 import CreateMigrantAccount from "./pages/agency/createMigrantAccount";
 import MigrantAccounts from "./pages/agency/migrantsAccounts";
 import AgencyComplaints from "./components/agency/AgencyComplaints";

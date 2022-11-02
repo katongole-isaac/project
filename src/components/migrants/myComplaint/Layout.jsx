@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import { useState } from "react";
 import ComplaintList from "./ComplaintList";
 import SearchButtons from "./SearchButtons";
@@ -12,6 +12,7 @@ import AudioComplaint from "./AudioComplaint";
 import TextComplaint from "./TextComplaint";
 import VideoComplaint from "./VideoComplaint";
 import { UserState } from "../../../userContext";
+import useMyCompStyles from "./styles";
 
 const MY_COMPLAINT_URL = `/complaints/views`;
 
@@ -40,11 +41,18 @@ const MigrantLayout = () => {
   return (
     <Container fullwidth sx={{ backgroundColor: "#FAFAFA" }}>
       <Title />
-      <SearchComplaint
+      <SearchContainer
         setSearchResults={setSearchResults}
         user={user}
         setSearchIsLoading={setSearchIsLoading}
-      />
+      >
+        <SearchComplaint
+          setSearchResults={setSearchResults}
+          user={user}
+          setSearchIsLoading={setSearchIsLoading}
+        />
+      </SearchContainer>
+
       <SearchButtons state={state} setState={setState} />
       {searchIsLoading ? (
         <Loading />
@@ -60,3 +68,22 @@ const MigrantLayout = () => {
 };
 
 export default MigrantLayout;
+
+const SearchContainer = ({
+  setSearchResults,
+  user,
+  setSearchIsLoading,
+  children,
+}) => {
+  const classes = useMyCompStyles();
+
+  return (
+    <>
+      <Grid container justifyContent="center" sx={{ width: "100%" }}>
+        <Grid item xs={12} sm={12} md={6} lg={5}>
+          <Box className={classes.searchBox}>{children}</Box>
+        </Grid>
+      </Grid>
+    </>
+  );
+};

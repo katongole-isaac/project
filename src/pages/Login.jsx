@@ -77,8 +77,8 @@ const Login = () => {
 
   //Go to , redirection, for successfull users. login
   const goTo = async (url, data, path) => {
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       const res = await loginUser(url, data);
       localStorage.setItem(`${res.data.user}`, res.data.token);
       localStorage.setItem("user", JSON.stringify({ ...res.data }));
@@ -91,8 +91,10 @@ const Login = () => {
         return;
       }
 
-      setIsLoading(false);
-      navigate(path);
+      setTimeout(() => {
+        navigate(path);
+        setIsLoading(false);
+      }, 3000);
 
       return;
     } catch (ex) {

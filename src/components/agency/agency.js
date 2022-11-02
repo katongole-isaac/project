@@ -58,6 +58,11 @@ const useAgencyStyles = makeStyles({
     justifyContent: "center",
     width: "100%",
   },
+  agencySearchContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "100%",
+  },
 });
 
 export default useAgencyStyles;

@@ -10,14 +10,15 @@ export const email = async (email) => {
   return await schema.isValid(email);
 };
 
-
 export const password = async (password) => {
   schema = yup.object().shape({
     password: yup
       .string()
       .min(6)
       .max(40)
-    //   .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/) //? |(^[@_#&*.+=\d+\w\^\s]$) "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@_+-.$#!`~|<>])[A-Za-z\d@+.$#`_|><]{6,}$/ // here ?= means followedby , () means groups
+      )
       .required(),
   });
   return await schema.isValid(password);
@@ -30,7 +31,7 @@ export const nameValidate = async (name) => {
       .min(3)
       .max(40)
       .trim()
-      .matches(/^[a-zA-Z]+$/g)
+      .matches(/^[a-zA-Z_]{3,}$/g)
       .required(),
   });
   return await schema.isValid(name);
@@ -43,7 +44,7 @@ export const locationValidate = async (location) => {
       .min(3)
       .max(40)
       .trim()
-      .matches(/^[^\d \^\W]+$/g)
+      .matches(/^[A-Za-z_]{3,}$/g)
       .required(),
   });
   return await schema.isValid(location);
@@ -59,7 +60,13 @@ export const phoneValidate = async (phone) => {
 
 export const passport = async (passport) => {
   schema = yup.object().shape({
-    passport: yup.string().trim().min(9).max(15).required(),
+    passport: yup
+      .string()
+      .trim()
+      .min(9)
+      .max(15)
+      .matches(/^A\d{8,}/g)
+      .required(),
   });
   return await schema.isValid(passport);
 };

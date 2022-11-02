@@ -6,7 +6,19 @@ import useFetch from "../../../useFetch";
 import useMyCompStyles from "./styles";
 
 const SEARCH_URL = `/complaints/search`;
-const SearchComplaint = ({ setSearchResults, user, setSearchIsLoading }) => {
+const SearchComplaint = ({
+  setSearchResults,
+  user,
+  setSearchIsLoading,
+  size,
+  label,
+  agency,
+  sx,
+  varaint,
+  InputProps,
+  plcHolder
+}) => {
+  console.log(sx);
   const [search, setSearch] = useState("");
   const [data, setData] = useState(null);
   // const [isLoading, setIsLoading] = useState(null);
@@ -14,13 +26,20 @@ const SearchComplaint = ({ setSearchResults, user, setSearchIsLoading }) => {
 
   const handleChange = async ({ target }) => {
     setSearch(target.value);
+
+    let resp;
     if (search.match(/^\s+$/g)) return;
     setSearchIsLoading(true);
     try {
-      const resp = await authFetch.get(
-        `${SEARCH_URL}?q=${search}&email=${user.email}`
-      );
-      console.log(`reason`, resp.data.res);
+      if (agency) {
+        resp = await authFetch.get(
+          `${SEARCH_URL}?q=${search}&agencyName=${user.name}`
+        );
+      } else {
+        resp = await authFetch.get(
+          `${SEARCH_URL}?q=${search}&email=${user.email}`
+        );
+      }
       setSearchResults((prev) => [...resp.data.res]);
       setSearchIsLoading(false);
     } catch (ex) {
@@ -32,21 +51,19 @@ const SearchComplaint = ({ setSearchResults, user, setSearchIsLoading }) => {
 
   return (
     <>
-      <Grid container justifyContent="center">
-        <Grid item xs={12} sm={12} md={6} lg={5}>
-          <Box className={classes.searchBox}>
-            <FormControl>
-              <TextField
-                label="search complaint"
-                name="search"
-                size="small"
-                value={search}
-                onChange={(e) => handleChange(e)}
-              />
-            </FormControl>
-          </Box>
-        </Grid>
-      </Grid>
+      <FormControl>
+        <TextField
+          placeholder={plcHolder}
+          label={label || "search complaint"}
+          name="search"
+          size={size || "small"}
+          value={search}
+          onChange={(e) => handleChange(e)}
+          sx={sx}
+          variant={varaint ?? varaint}
+          InputProps={InputProps ?? InputProps}
+        />
+      </FormControl>
     </>
   );
 };

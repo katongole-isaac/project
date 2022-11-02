@@ -1,5 +1,6 @@
 import {
   Alert,
+  Box,
   Button,
   CircularProgress,
   FormControl,
@@ -152,7 +153,7 @@ const SignUpComp = ({
   return (
     <div className={signup ? "container-register" : "agency-register"}>
       <Grid container justifyContent="center">
-        <Grid item xs={10} sm={8} md={4} lg={4} sx={{ marginTop: 4 }}>
+        <Grid item xs={10} sm={8} md={6} lg={4} sx={{ marginTop: 4 }}>
           <Paper sx={{ padding: 2 }} elevation={3}>
             {error && <Alert severity="error">{error}</Alert>}
             {success && (
@@ -163,7 +164,7 @@ const SignUpComp = ({
             </Typography>
             <hr style={{ color: "#0C2D48" }} />
             <form action="" autoComplete="off">
-              <div>
+              <Box sx={{ display: "flex", mb: 1 }}>
                 <FormControl>
                   <TextField
                     variant="standard"
@@ -188,7 +189,7 @@ const SignUpComp = ({
                     helperText={lastNameError && "invalid name format... "}
                   />
                 </FormControl>
-              </div>
+              </Box>
               <FormControl fullWidth sx={{ margin: 1 }}>
                 <TextField
                   variant="standard"
@@ -226,7 +227,7 @@ const SignUpComp = ({
                   error={passwordError}
                   helperText={
                     passwordError &&
-                    "password too weak.. you can mix char(s),digits,symbols  "
+                    "password must contains chars , digits or symbols of length 6  e.g Ex@mp1e "
                   }
                 />
               </FormControl>
@@ -240,6 +241,7 @@ const SignUpComp = ({
                   onChange={handleChange}
                   type="text"
                   error={passportError}
+                  helperText={passportError && "Invalid passport number"}
                 />
               </FormControl>
 

@@ -16,6 +16,7 @@ import { Drawer } from "@mui/material";
 import useAgencyStyles from "./agency";
 import { Box } from "@mui/material";
 import { useState } from "react";
+import Person3Icon from "@mui/icons-material/Person3";
 
 const AgencySideNav = () => {
   const classes = useAgencyStyles();
@@ -28,22 +29,18 @@ const AgencySideNav = () => {
     {
       name: "Complaints",
       path: "/agency",
-      icon: `${(<LocalPostOfficeIcon />)}`,
     },
     {
       name: "Add Migrant",
       path: "/agency/create",
-      icon: `${(<LocalPostOfficeIcon />)}`,
     },
     {
       name: "Accounts",
       path: "accounts",
-      icon: `${(<LocalPostOfficeIcon />)}`,
     },
     {
       name: "Profile",
       path: "profile",
-      icon: `${(<LocalPostOfficeIcon />)}`,
     },
   ];
 
@@ -108,7 +105,7 @@ const AgencyList = ({ navLink, classes, activeLink, setActiveLink }) => {
                     )}
                     {link.name === "Profile" && (
                       <ListItemIcon>
-                        <LocalPostOfficeIcon sx={{ color: "white" }} />
+                        <Person3Icon sx={{ color: "white" }} />
                       </ListItemIcon>
                     )}
                     <ListItemText primary={link.name} />
