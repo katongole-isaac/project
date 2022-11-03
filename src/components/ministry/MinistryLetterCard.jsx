@@ -21,7 +21,6 @@ const MinistryLetterCard = ({
   color,
   complaintId,
 }) => {
-  console.log(complaintId);
   return (
     <>
       <ListItem disablePadding sx={{ p: 0.4 }}>

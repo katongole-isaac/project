@@ -82,6 +82,8 @@ const AgencyComplaints = ({
     showResults = searchResults;
   }
 
+  console.log(showResults);
+
   return (
     <>
       <Box sx={{ flexGrow: 1, minHeight: "100%" }}>

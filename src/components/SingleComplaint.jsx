@@ -13,6 +13,9 @@ import { useContext } from "react";
 import React from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { firstLetterUpperCase } from "../utils/firstLetterUpperCase";
+import authFetch from "../authFetch";
+import { colorsForComplaintStatus } from "../utils/colorsForComplaintStatus";
+import updateComplaintStatus from "./utils/updateComplaintStatus";
 
 const useTestingStyles = makeStyles({
   listItem: {
@@ -26,6 +29,8 @@ const useTestingStyles = makeStyles({
 // ## /migrant?q=complaintId
 const ComplaintContext = React.createContext();
 
+const UPDATE_COMPLAINT_STATUS_URL = `/complaints/updateview`;
+const COMPLAINT_STATUS = `seen`;
 const SingleComplaint = ({
   fullname,
   desc,
@@ -36,6 +41,7 @@ const SingleComplaint = ({
   audioUrl,
   videoUrl,
   formatType,
+  status,
 }) => {
   return (
     <>
@@ -49,6 +55,7 @@ const SingleComplaint = ({
           audioUrl,
           videoUrl,
           date,
+          status,
           formatType,
         }}
       >
@@ -82,14 +89,28 @@ const MyStack = () => {
     email,
     date,
     videoUrl,
+    _id,
     audioUrl,
     formatType,
+    status,
   } = useContext(ComplaintContext);
 
   const format = formatType(desc, videoUrl, audioUrl);
+  const statusColor = colorsForComplaintStatus(status);
+
+ 
+
   return (
     <>
       <Card
+        onClick={() =>
+          //updating status complaint  ****for Updating the complaint status === from pending to seen  == ****
+          updateComplaintStatus(
+            UPDATE_COMPLAINT_STATUS_URL,
+            _id,
+            COMPLAINT_STATUS
+          )
+        }
         sx={{
           border: "none",
           borderLeft: `4px solid ${format?.color}`,
@@ -139,9 +160,14 @@ const MyStack = () => {
             </Stack>
           </Box>
           <Box>
-            <Typography variant="body2">
-              {new Date(date).toDateString()}
-            </Typography>
+            <Stack direction="row" spacing={0.5}>
+              <Typography variant="body2" sx={{ color: statusColor }}>
+                {status}
+              </Typography>
+              <Typography variant="body2">
+                {new Date(date).toDateString()}
+              </Typography>
+            </Stack>
           </Box>
         </Box>
         {/* <CardContent></CardContent> */}

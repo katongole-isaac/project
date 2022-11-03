@@ -52,6 +52,29 @@ const useMinistryStyles = makeStyles((theme) => {
     accountsPage: {
       backgroundColor: "",
     },
+    activeLink: {
+      backgroundColor: "#669bbc",
+    },
+    listItem: {
+      "& a": {
+        textDecoration: "none",
+      },
+    },
+    ministryCardSection: {
+      display: "flex",
+      width: "100%",
+      padding: 1,
+      margin: "auto",
+      border: "1px solid red",
+    },
+    ministryStatBox: {
+      minHeight: `calc(100vh - 24px)`,
+      height: "92vh",
+      width: "100%",
+    },
+    titleSectionText: {
+      color: "#0d1b2a",
+    },
   };
 });
 

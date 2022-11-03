@@ -2,7 +2,6 @@ import { Grid, Typography, Box, Container } from "@mui/material";
 
 import { useMemo, useState } from "react";
 import Loading from "../../../components/Loading";
-import { useMinistryStyles } from "../../../ministry";
 import useFetch from "../../../useFetch";
 import UserAction from "./utils/UserActions";
 import Chip from "@mui/material/Chip";
@@ -13,12 +12,13 @@ import DeleteUser from "./utils/DeleteUser";
 import PageError from "../../../components/PageError";
 import ConfirmDelete from "../../../components/ConfirmDelete";
 import authFetch from "../../../authFetch";
+import { useMinistryStyles } from "../../../components/ministry/ministry";
 
 const AGENCY_ACCOUNTS_URL = `http://localhost:3001/api/agency/accounts`;
 const UPDATE_AGENCY_URL = "/agency/account/update";
 const DELETE_AGENCY_URL = `/agency/account/delete`;
 
-const Accounts = () => {
+const Accounts = ({ setTotalAccounts, setClosedAccs, setActiveAccs }) => {
   const { errorDetails, isLoading, results } = useFetch(AGENCY_ACCOUNTS_URL);
   const rowsOptions = [5, 10, 15, 25, 50];
   const [pageSize, setPageSize] = useState(rowsOptions[0]);
@@ -139,6 +139,8 @@ const Accounts = () => {
         flex: 1,
         headerAlign: "left",
         headerClassName: "dataGridHeader",
+        valueFormatter: (params) =>
+          new Date(parseInt(params.value)).toDateString(),
       },
       {
         field: "action",
@@ -199,6 +201,7 @@ const Accounts = () => {
 
   if (!rowIdsToBeDeleted.length <= 0) rows = DeleteRow(rowIdsToBeDeleted);
 
+  if (rows) getStat(rows, setActiveAccs, setTotalAccounts, setClosedAccs);
   const more = [
     ...rows,
     ...rows,
@@ -224,17 +227,17 @@ const Accounts = () => {
         />
         <UpdateError {...{ updateError, setUpdateError }} />
 
-        <Box sx={{ m: 1 }}>
+        <Box sx={{ m: 1, minHeight: "90vh" }}>
           <Box
             className={classes.dataGrid}
             sx={{
               "& .style-Active": {
-                bgcolor: "#eeeeee",
+                bgcolor: "#FAFAFA",
               },
               "& .style-Closed": {
-                bgcolor: "#ef9a9a",
-                " &:hover": {
-                  bgcolor: "#ffcdd2",
+                bgcolor: "#f28482",
+                " &: hover": {
+                  bgcolor: "#f28482",
                 },
               },
             }}
@@ -256,3 +259,10 @@ const Accounts = () => {
 };
 
 export default Accounts;
+
+//getting some stats on Agencies to be display in the ministry dashboard
+const getStat = (arr, setActiveAccs, setTotalAccounts, setClosedAccs) => {
+  setTotalAccounts(arr.length);
+  setActiveAccs(arr.filter((item) => item.status === "Active").length);
+  setClosedAccs(arr.filter((item) => item.status === "Closed").length);
+};

@@ -18,7 +18,6 @@ const SearchComplaint = ({
   InputProps,
   plcHolder
 }) => {
-  console.log(sx);
   const [search, setSearch] = useState("");
   const [data, setData] = useState(null);
   // const [isLoading, setIsLoading] = useState(null);

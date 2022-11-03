@@ -20,7 +20,6 @@ const AgencyComplaintsLayout = () => {
     `${AGENCY_COMPLAINTS}?agency=${user.name}`
   );
 
-  console.log(searchResults);
   return (
     <>
       <Box

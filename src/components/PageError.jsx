@@ -22,7 +22,7 @@ const usePageError = makeStyles({
 
 const PageError = ({ msg, path }) => {
   const classes = usePageError();
-  const message = msg ?? "We couldn't process your request";
+  const message = msg || "We couldn't process your request";
   return (
     <>
       <Box

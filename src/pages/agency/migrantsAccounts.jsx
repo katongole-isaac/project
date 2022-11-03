@@ -9,7 +9,6 @@ import AccountsDataGrid from "../../components/AccountsDataGrid";
 import UpdateError from "../ministry/pages/utils/updateErrorDisplay";
 import UserAction from "../ministry/pages/utils/UserActions";
 import useFetch from "../../useFetch";
-import { useMinistryStyles } from "../../ministry";
 import Loading from "../../components/Loading";
 import { useContext } from "react";
 import { UserState } from "../../userContext";

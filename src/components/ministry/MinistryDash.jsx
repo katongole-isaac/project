@@ -2,7 +2,7 @@ import MinistryAppBar from "./Appbar";
 import MinistryDrawer from "./MinistryDrawer";
 import { Outlet } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import { useMinistryStyles } from "../../ministry";
+import { useMinistryStyles } from "./ministry";
 import { Box, Grid } from "@mui/material";
 import { Container } from "@mui/system";
 

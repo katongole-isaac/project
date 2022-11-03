@@ -19,7 +19,7 @@ import {
 import axios from "axios";
 import { useRef } from "react";
 import MinistryPopUp from "../popUp";
-import { useMinistryStyles } from "../../../ministry";
+import { useMinistryStyles } from "../../../components/ministry/ministry";
 
 const AGENCY_SIGNUP = `http://localhost:3001/api/agency/signup`;
 const CreateUser = () => {

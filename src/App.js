@@ -40,6 +40,7 @@ import LetterPDFView from "./components/singleComplaintView/LetterPDFView";
 import { UserContext } from "./userContext";
 import ComplaintEditor from "./components/Editor/ComplaintEditor";
 import MinistryLetterComplaint from "./pages/ministry/pages/MinistryLetterComplaints";
+import MinistryStatistics from "./pages/ministry/pages/Statistics";
 
 function App() {
   return (
@@ -87,14 +88,14 @@ function App() {
                 </AdminProtectedRoute>
               }
             >
+              <Route index element={<MinistryStatistics />} />
+              <Route path="accounts" element={<AgencyPaperAccount />} />
               <Route path="complaint" element={<MinistryLetterComplaint />} />
-              <Route index element={<CreateUser />} />
+              <Route path="create" element={<CreateUser />} />
               <Route
                 path="complaints/:complaintId"
                 element={<SingleComplaintView />}
               />
-              <Route path="create" element={<CreateUser />} />
-              <Route path="accounts" element={<AgencyPaperAccount />} />
             </Route>
 
             <Route
