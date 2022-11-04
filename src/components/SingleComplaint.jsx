@@ -153,7 +153,7 @@ const MyStack = () => {
               {desc && (
                 <>
                   <Typography variant="body2">
-                    {`${desc.substring(0, 110)}...`}
+                    {`${desc.substring(0, 95)}...`}
                   </Typography>
                 </>
               )}

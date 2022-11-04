@@ -41,6 +41,7 @@ import { UserContext } from "./userContext";
 import ComplaintEditor from "./components/Editor/ComplaintEditor";
 import MinistryLetterComplaint from "./pages/ministry/pages/MinistryLetterComplaints";
 import MinistryStatistics from "./pages/ministry/pages/Statistics";
+import ClosedAccounts from "./pages/ClosedAccounts";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<SignUp />} />
+              <Route path="/accounts/closed" element={<ClosedAccounts />} />
             </Route>
 
             {/* Testing routes here */}

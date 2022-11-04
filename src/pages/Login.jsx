@@ -80,6 +80,12 @@ const Login = () => {
     try {
       setIsLoading(true);
       const res = await loginUser(url, data);
+
+      if (res.data.status && res.data.status === "Closed") {
+        navigate("/accounts/closed");
+        return;
+      }
+
       localStorage.setItem(`${res.data.user}`, res.data.token);
       localStorage.setItem("user", JSON.stringify({ ...res.data }));
       localStorage.setItem(`id_token`, res.data.user);

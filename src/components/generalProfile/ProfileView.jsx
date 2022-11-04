@@ -73,7 +73,7 @@ const ProfileView = ({ user, setUser }) => {
     }
     try {
       const resp = await authFetch.put(`${UPDATE_PRO_URL}/${user.user}`, {
-        id: user.user,
+        _id: user.user,
         ...data,
         firstname: user.firstname,
         lastname: user.lastname,

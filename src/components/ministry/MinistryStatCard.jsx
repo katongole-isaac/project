@@ -8,9 +8,10 @@ const MinistryStatCard = ({ num, label }) => {
           display: "flex",
           flexGrow: 1,
           height: "200px",
-          width: "96%",
+          width: "200px",
           m: "auto",
           mb: 1,
+          mr: 1,
           backgroundColor: "#f8f9fa",
         }}
       >

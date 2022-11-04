@@ -21,10 +21,29 @@ const MinistryStatisticsCardSection = () => {
   console.log(results);
   const { totalComplaints, totalAgencies, migrants } = results;
 
+  // className={classes.ministryCardSection}
   return (
     <>
-      {/* <Box className={classes.ministryCardSection}> */}
       <MinistryStatContext.Provider value={{ results }}>
+        <Box>
+          <Box sx={{ display: "flex" }}>
+            <MinistryStatCard label="TotalComplaints" num={totalComplaints} />
+            <MinistryStatCard label="TotalAgencies" num={totalAgencies} />
+            <MinistryStatCard label="TotalMigrants" num={migrants} />
+          </Box>
+          <Box sx={{ display: "flex" }}>
+            <MinistryGraphCard
+              _doughnut={true}
+              chartTitle="Doughnut showing agencies aganist complaints"
+            />
+            <MinistryGraphCard _bar={true} chartTitle="Bar graph showing complaints with their respe" />
+            <MinistryGraphCard
+              _pie={true}
+              chartTitle="Pie Chart showing agencies with the complaint expressed in percentage (%) "
+              mt={3}
+            />
+          </Box>
+          {/* 
         <Grid container spacing={1}>
           <Grid
             item
@@ -46,15 +65,16 @@ const MinistryStatisticsCardSection = () => {
             sm={12}
             md={6}
             lg={8}
-            sx={{ border: "1px solid red", display: "flex" }}
+            sx={{ border: "1px solid red", display: "flex", flexWrap: true }}
           >
-            <MinistryGraphCard />
-            <MinistryGraphCard />
+            <MinistryGraphCard _doughnut={true} />
+            <MinistryGraphCard _bar={true} />
+            <MinistryGraphCard _pie={true} />
           </Grid>
         </Grid>
+     */}
+        </Box>
       </MinistryStatContext.Provider>
-
-      {/* </Box> */}
     </>
   );
 };
