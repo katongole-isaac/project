@@ -1,4 +1,4 @@
-module.exports.firstLetterUpperCase = (str) => {
+const firstLetterUpperCase = (str) => {
   const words = str.split(" ");
   let newWord = [];
   for (let word of words) {
@@ -7,3 +7,5 @@ module.exports.firstLetterUpperCase = (str) => {
   }
   return "".concat(newWord).replace(/[,]/g, " ");
 };
+
+export { firstLetterUpperCase };

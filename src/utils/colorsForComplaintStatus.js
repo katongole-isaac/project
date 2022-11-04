@@ -17,4 +17,4 @@ const colorsForComplaintStatus = (status) => {
   }
 };
 
-module.exports.colorsForComplaintStatus = colorsForComplaintStatus;
+export { colorsForComplaintStatus };

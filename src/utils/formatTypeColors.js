@@ -16,4 +16,4 @@ function formatTypeColors(desc, videoUrl, audioUrl) {
     };
 }
 
-module.exports = formatTypeColors
+export { formatTypeColors };

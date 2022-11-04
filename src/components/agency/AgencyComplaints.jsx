@@ -12,7 +12,8 @@ import { UserState } from "../../userContext";
 import NoContent from "../NoContent";
 import { DataGrid } from "@mui/x-data-grid";
 import SkeletonLoading from "../SkeletonLoading";
-import formatTypeColors from "../../utils/formatTypeColors";
+import { formatTypeColors } from "../../utils/formatTypeColors";
+
 
 const drawerWidth = 240;
 const NO_CONTENT_MSG = `No complaints available`;
