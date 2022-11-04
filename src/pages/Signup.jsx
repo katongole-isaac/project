@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import SignUpComp from "../components/SignUpComp";
 import useFetch from "../useFetch";
 
-const url = "http://localhost:3001/api/user/signup";
+// const url = "http://localhost:3001/api/user/signup";
+const url = `https://warm-citadel-90422.herokuapp.com/`;
 
 const AGENCIES_ACC_URL = "/agency/all  ";
 

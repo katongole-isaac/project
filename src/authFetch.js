@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const baseURL = `http://localhost:3001/api`;
+// const baseURL = `http://localhost:3001/api`;
+const baseURL = `https://warm-citadel-90422.herokuapp.com/api`; //server in prod
 
 // const token = localStorage.getItem("user")
 // 	? JSON.parse(localStorage.getItem("user")).token
