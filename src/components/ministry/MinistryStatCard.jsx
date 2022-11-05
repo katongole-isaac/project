@@ -7,18 +7,17 @@ const MinistryStatCard = ({ num, label }) => {
         sx={{
           display: "flex",
           flexGrow: 1,
-          height: "200px",
-          width: "200px",
-          m: "auto",
+          height: "32%",
+          width: "100%",
+          // m: "auto",
           mb: 1,
-          mr: 1,
-          backgroundColor: "#f8f9fa",
+          // mr: 1,
+          backgroundColor: "#fff",
         }}
       >
         <Box
           sx={{
             display: "flex",
-            border: "1px solid red",
             width: "100%",
             alignItems: "center",
             justifyContent: "center",

@@ -62,6 +62,7 @@ const ProfileView = ({ setUser, user }) => {
     const isPhone = await phoneValidate({ phone: phone });
     const islocation = await locationValidate({ location });
     const isName = await nameValidate({ name });
+    console.log(isName);
 
     if (isName === false) {
       setNameError(true);
@@ -153,7 +154,7 @@ const ProfileView = ({ setUser, user }) => {
                 onChange={handleChange}
                 error={nameError}
                 helperText={
-                  nameError ? "name must atleast be more than 3 char(s)..." : ""
+                  nameError ? "invalid name format ..." : ""
                 }
               />
             </FormControl>

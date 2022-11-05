@@ -3,6 +3,7 @@ import { Stack } from "@mui/system";
 import { useState } from "react";
 import { useContext } from "react";
 import { AgencyStatContext } from "./AgencyLayout";
+import AgencyStatFetch from "./agencyStatFetch";
 
 const cards = [
   {
@@ -25,26 +26,44 @@ const cards = [
 
 //Statistics card
 
-const AgencyComplaintTitle = ({ user, totalComplaints }) => {
+const AgencyComplaintTitle = ({ user, totalComplaints, allComplaints }) => {
   const { showStat } = useContext(AgencyStatContext);
 
-  const { forwarded, seen, pending, workedUpon } = user.details;
+  let [forwarded, seen, pending, workedUpon] = [0, 0, 0, 0];
+
   const [cardContent, setCardContent] = useState([
     {
       color: "#00b4d8",
-      label: "Total Letters",
-      num: 0,
+      label: "Total Letters Sent",
+      totalLetters: true,
     },
     {
       color: "#00afb9",
-      label: "Total Complaints",
-    },
-    {
-      color: "#34a0a4",
-      label: "Total statistics",
-      num: seen,
+      label: "Total Migrants",
+      totalMigrants: true,
     },
   ]);
+  console.log(allComplaints);
+  if (allComplaints && allComplaints?.length !== 0) {
+    for (let complaint of allComplaints) {
+      switch (complaint.status) {
+        case "seen":
+          seen += 1;
+          continue;
+        case "forwarded":
+          forwarded += 1;
+          continue;
+        case "workedUpon":
+          workedUpon += 1;
+          continue;
+        case "pending":
+          pending += 1;
+          continue;
+        default:
+          break;
+      }
+    }
+  }
   return (
     <>
       {showStat && (
@@ -64,18 +83,21 @@ const AgencyComplaintTitle = ({ user, totalComplaints }) => {
             />
           )}
           {/* <Typography variant="h6">Agency Title here</Typography> */}
-          {cardContent.map(({ color, label, num }) => (
-            <CardItem
-              key={color}
-              bg={color}
-              num={num}
-              label={label}
-              forwarded={forwarded}
-              seen={seen}
-              pending={pending}
-              workedUpon={workedUpon}
-            />
-          ))}
+          {cardContent.map(
+            ({ color, label, num, totalLetters, totalMigrants }) => (
+              <CardItem
+                key={color}
+                bg={color}
+                label={label}
+                forwarded={forwarded}
+                seen={seen}
+                totalMigrants={totalMigrants}
+                totalLetters={totalLetters}
+                pending={pending}
+                workedUpon={workedUpon}
+              />
+            )
+          )}
           <StatCard
             label="Statistics"
             bg="#ff6b6b"
@@ -101,6 +123,8 @@ const CardItem = ({
   workedUpon,
   pending,
   num,
+  totalMigrants,
+  totalLetters,
 }) => {
   return (
     <>
@@ -109,6 +133,10 @@ const CardItem = ({
           <Stack sx={{ color: "#03071e" }}>
             <Typography variant="h5"> {label}</Typography>
             <ShowTypographyNmber num={num} />
+            {totalLetters && <AgencyStatFetch _totalLetters={totalLetters} />}
+            {totalMigrants && (
+              <AgencyStatFetch _totalMigrants={totalMigrants} />
+            )}
           </Stack>
         </CardContent>
       </Card>

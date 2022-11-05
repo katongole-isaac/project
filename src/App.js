@@ -42,6 +42,7 @@ import ComplaintEditor from "./components/Editor/ComplaintEditor";
 import MinistryLetterComplaint from "./pages/ministry/pages/MinistryLetterComplaints";
 import MinistryStatistics from "./pages/ministry/pages/Statistics";
 import ClosedAccounts from "./pages/ClosedAccounts";
+import MinistryAgenciesList from "./components/ministry/MinistryAgenciesListing";
 
 function App() {
   return (
@@ -59,7 +60,7 @@ function App() {
             {/* Testing routes here */}
             <Route path="general" element={<ProfileLayout />} />
             <Route path="complaint" element={<MigrantLayout />} />
-            <Route path="pro" element={<ChangePassword />} />
+            <Route path="pro" element={<MinistryAgenciesList />} />
             <Route path="/editor" element={<ComplaintEditor />} />
             <Route path="/test/view" element={<SingleComplaintView />} />
             <Route path="videor" element={<VideoRec />} />

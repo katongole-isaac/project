@@ -14,7 +14,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import SkeletonLoading from "../SkeletonLoading";
 import { formatTypeColors } from "../../utils/formatTypeColors";
 
-
 const drawerWidth = 240;
 const NO_CONTENT_MSG = `No complaints available`;
 const AGENCY_COMPLAINTS = `/complaints/agency/views`;
@@ -38,6 +37,7 @@ const AgencyComplaints = ({
   errorDetails,
   results,
   setTotalComplaints,
+  setAllComplaints,
 }) => {
   const { user } = useContext(UserState);
   const classes = useAgencyComplaintStyles();
@@ -75,7 +75,10 @@ const AgencyComplaints = ({
   ];
 
   let showResults = results.res;
-  if (showResults) setTotalComplaints(showResults.length);
+  if (showResults) {
+    setAllComplaints(showResults);
+    setTotalComplaints(showResults.length);
+  }
 
   //updating the UI according to search results.
   if (searchResults.length !== 0) {

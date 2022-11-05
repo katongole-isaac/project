@@ -4,7 +4,7 @@ import PendingIcon from "@mui/icons-material/Pending";
 const MyChip = ({ label, color }) => {
   return (
     <>
-      <Chip label={label} icon={<PendingIcon />} size="small" color={color} />
+      <Chip label={label} size="small" sx={{ backgroundColor: color, color: '#fff' }} />
     </>
   );
 };

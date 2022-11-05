@@ -1,7 +1,9 @@
+import { blue } from "@mui/material/colors";
 import { makeStyles } from "@mui/styles";
 import { fontWeight } from "@mui/system";
 
 const useMyCompStyles = makeStyles((theme) => {
+  let color = " ";
   return {
     card: {
       minHeight: "150px",
@@ -36,10 +38,14 @@ const useMyCompStyles = makeStyles((theme) => {
       },
     },
     videoBox: {
-      flexBasis: "70%",
+      flexBasis: "500px",
       padding: 5,
       marginTop: 20,
       marginLeft: 10,
+      [theme.breakpoints.down("md")]: {
+        height: "auto",
+        flexBasis: "auto",
+      },
     },
     videoNote: {
       // margin: 5,
@@ -48,6 +54,11 @@ const useMyCompStyles = makeStyles((theme) => {
       marginTop: 10,
       marginLeft: 5,
       marginRight: 5,
+    },
+    complaintLinks: {
+      textDecoration: "underline",
+      cursor: "pointer",
+      color: blue[800],
     },
   };
 });

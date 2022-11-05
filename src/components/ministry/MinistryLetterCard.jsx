@@ -32,7 +32,7 @@ const MinistryLetterCard = ({
             borderRadius: "10px",
             borderLeft: `10px solid ${color}`,
             display: "flex",
-            backgroundColor: "#bde0fe",
+            // backgroundColor: "#bde0fe",
             p: 0.5,
           }}
         >

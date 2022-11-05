@@ -12,6 +12,9 @@ import AudioPlayer from "react-h5-audio-player";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import useMyCompStyles from "./styles";
 import { Stack } from "@mui/system";
+import { colorsForComplaintStatus } from "../../../utils/colorsForComplaintStatus";
+import CommentDialog from "./CommentDialog";
+import { useState } from "react";
 
 const AUDIO_URL = `http://localhost:3001/api/uploads/audio/`;
 
@@ -30,42 +33,53 @@ const AudioComplaint = ({ complaints }) => {
 export default AudioComplaint;
 const AudioCard = ({ _id, reason, sent, audioUrl, status }) => {
   const classes = useMyCompStyles();
+  const color = colorsForComplaintStatus(status);
+  const [openDialog, setOpenDialog] = useState(false);
 
   return (
     <>
-      <Card>
+      <CommentDialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        _id={_id}
+        reason={reason}
+      />
+      <Card sx={{ mt: 1, mb: 1 }}>
         <Box className={classes.card}>
           <Box className={classes.boxInsideCard}>
             <Stack direction="row" alignItems={"center"} spacing={2}>
-              <Typography>ID: {_id} </Typography>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 {reason}
               </Typography>
             </Stack>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            <Typography variant="body2">
               {new Date(parseInt(sent)).toDateString()}
             </Typography>
           </Box>
 
           <CardMedia>
             <Box className={classes.audioBox}>
-              <Typography sx={{ ml: 2, mr: 1, flexBasis: "40%" }}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti nam molestiae porro quis suscipit veniam dicta dolorem
-                impedit dolor ipsum!
-              </Typography>
               <Box sx={{ m: 1, flexGrow: 1 }}>
-                <AudioPlayer
+                {/* <AudioPlayer
                   src={`${AUDIO_URL}${audioUrl.replace("uploads/", "")}`}
                   onPlay={(e) => console.log("onPlay")}
+                /> */}
+                <audio
+                  src={`${AUDIO_URL}${audioUrl.replace("uploads/", "")}`}
+                  controls
                 />
               </Box>
             </Box>
           </CardMedia>
           <CardActions>
             <Stack direction="row" spacing={1}>
-              <MyChip color={"warning"} label={status} />
-              <ChatBubbleOutlineIcon fontSize="small" />
+              <MyChip color={color} label={status} />
+              <a
+                onClick={() => setOpenDialog(true)}
+                className={classes.complaintLinks}
+              >
+                comments
+              </a>
             </Stack>
           </CardActions>
         </Box>

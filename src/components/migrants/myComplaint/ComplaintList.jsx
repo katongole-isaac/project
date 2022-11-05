@@ -25,7 +25,7 @@ const ComplaintList = ({ state, complaints }) => {
 
   return (
     <>
-      <Stack spacing={0.5}>
+      <Stack spacing={1} sx={{ mb: 2 }}>
         {(state === "text" || state === "all") && (
           <>
             <TextComplaint complaints={complaints} />

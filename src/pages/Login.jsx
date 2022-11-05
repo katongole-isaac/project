@@ -13,10 +13,10 @@ import { password, email } from "../validate";
 import { useEffect, useContext } from "react";
 import { loginUser, UserState } from "../userContext";
 import LoginLoading from "../components/LoginLoading";
-import { BaseUrl } from "../../baseUrl";
+import { BaseUrl } from "../baseUrl";
 
-// const url = "http://localhost:3001/api/user/login"; for local code.
-const url = `${BaseUrl}/api/user/login`;
+const url = "http://localhost:3001/api/user/login"; //for local code.
+// const url = `${BaseUrl}/api/user/login`;
 
 const useStyles = makeStyles((theme) => {
   return {

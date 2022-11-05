@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SignUpComp from "../components/SignUpComp";
 import useFetch from "../useFetch";
+import { BaseUrl } from "../baseUrl";
 
-// const url = "http://localhost:3001/api/user/signup";
-const url = `https://warm-citadel-90422.herokuapp.com/`;
+const url = "http://localhost:3001/api/user/signup";
+// const url = `${BaseUrl}/api/user/signup`;
 
 const AGENCIES_ACC_URL = "/agency/all  ";
 
@@ -35,17 +36,17 @@ const SignUp = () => {
     error: AgenciesFetchError,
   } = useFetch(AGENCIES_ACC_URL);
 
-	const getAgencies = () => {
-		if (error) {
-			if (error.code === "ERR_BAD_REQUEST")
-				setError("check the fields and try again");
-			else if (error.code === "ERR_NETWORK") setError(error.message);
-			else console.log(error);
-			// setError();
-		} else {
-			if (Object.keys(results).length !== 0) {
-				if (results.agencies?.length !== 0) {
-					const agenciesRes = results.agencies;
+  const getAgencies = () => {
+    if (error) {
+      if (error.code === "ERR_BAD_REQUEST")
+        setError("check the fields and try again");
+      else if (error.code === "ERR_NETWORK") setError(error.message);
+      else console.log(error);
+      // setError();
+    } else {
+      if (Object.keys(results).length !== 0) {
+        if (results.agencies?.length !== 0) {
+          const agenciesRes = results.agencies;
 
           setAgencies((prev) => {
             return agenciesRes;

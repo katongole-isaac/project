@@ -40,11 +40,12 @@ const MinistryLetterList = () => {
           height: "90vh",
           padding: 5,
         }}
-      >
+      >  
+      
         <List>
           {letters.map((letter) => {
             let color = randomColor(colors);
-            return <MinistryLetterCard {...letter} color={color} />;
+            return <MinistryLetterCard {...letter} />;
           })}
         </List>
       </Box>

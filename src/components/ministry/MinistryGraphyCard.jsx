@@ -1,17 +1,33 @@
-import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardMedia,
+  Stack,
+  Typography,
+} from "@mui/material";
 import DemoGraph from "./graphs/Demo";
 
-const MinistryGraphCard = ({ _line, _bar, _pie, _doughnut, chartTitle, mt }) => {
+const MinistryGraphCard = ({
+  _line,
+  _bar,
+  _pie,
+  _polar,
+  _doughnut,
+  chartTitle,
+  mt,
+}) => {
   return (
     <>
       <Card
         sx={{
           display: "flex",
-          flexGrow: 1,
-          height: "400px",
+          // flexGrow: 1,
+          // height: "200px",
           width: "250px",
           m: 1,
-          backgroundColor: "#f8f9fa",
+          p: 1,
+          backgroundColor: "#fff",
         }}
       >
         <Box
@@ -24,24 +40,16 @@ const MinistryGraphCard = ({ _line, _bar, _pie, _doughnut, chartTitle, mt }) => 
             position: "relative",
           }}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              p: 1,
-              width: "100%",
-            }}
-          >
-            <Typography textAlign={"center"} variant="h6">
-              {chartTitle}
-            </Typography>
-          </Box>
+          <Typography textAlign={"center"} variant="h6" sx={{ m: 1 }}>
+            {chartTitle}
+          </Typography>
           <CardMedia sx={{ marginTop: mt }}>
             <DemoGraph
               _bar={_bar}
               _line={_line}
               _doughnut={_doughnut}
               _pie={_pie}
+              _polar={_polar}
             />
           </CardMedia>
         </Box>

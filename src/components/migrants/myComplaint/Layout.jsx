@@ -39,31 +39,35 @@ const MigrantLayout = () => {
   console.log(searchIsLoading);
 
   return (
-    <Container fullwidth sx={{ backgroundColor: "#FAFAFA" }}>
-      <Title />
-      <SearchContainer
-        setSearchResults={setSearchResults}
-        user={user}
-        setSearchIsLoading={setSearchIsLoading}
-      >
-        <SearchComplaint
+    <Box
+      sx={{ backgroundImage: `linear-gradient(#eeeeee, #0d1f2d)`, pb: 2, m: 0 }}
+    >
+      <Container fullwidth sx={{ backgroundColor: "#FAFAFA", mb: 2 }}>
+        <Title />
+        <SearchContainer
           setSearchResults={setSearchResults}
           user={user}
           setSearchIsLoading={setSearchIsLoading}
-        />
-      </SearchContainer>
+        >
+          <SearchComplaint
+            setSearchResults={setSearchResults}
+            user={user}
+            setSearchIsLoading={setSearchIsLoading}
+          />
+        </SearchContainer>
 
-      <SearchButtons state={state} setState={setState} />
-      {searchIsLoading ? (
-        <Loading />
-      ) : (
-        <ComplaintList
-          state={state}
-          setState={setState}
-          complaints={complaints}
-        />
-      )}
-    </Container>
+        <SearchButtons state={state} setState={setState} />
+        {searchIsLoading ? (
+          <Loading />
+        ) : (
+          <ComplaintList
+            state={state}
+            setState={setState}
+            complaints={complaints}
+          />
+        )}
+      </Container>
+    </Box>
   );
 };
 

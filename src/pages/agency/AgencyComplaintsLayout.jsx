@@ -14,7 +14,7 @@ const AgencyComplaintsLayout = () => {
   const { user } = useContext(UserState);
   const [searchIsLoading, setSearchIsLoading] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  // const [] = useState();
+  const [allComplaints, setAllComplaints] = useState();
   const [totalComplaints, setTotalComplaints] = useState(null);
   const { isLoading, error, errorDetails, results } = useFetch(
     `${AGENCY_COMPLAINTS}?agency=${user.name}`
@@ -31,7 +31,11 @@ const AgencyComplaintsLayout = () => {
           mt: 1,
         }}
       >
-        <AgencyComplaintTitle user={user} totalComplaints={totalComplaints} />
+        <AgencyComplaintTitle
+          user={user}
+          totalComplaints={totalComplaints}
+          allComplaints={allComplaints}
+        />
         <AgencyComplaintSearch
           user={user}
           totalComplaints={totalComplaints}
@@ -45,6 +49,7 @@ const AgencyComplaintsLayout = () => {
           isLoading={isLoading}
           errorDetails={errorDetails}
           results={results}
+          setAllComplaints={setAllComplaints}
         />
       </Box>
     </>

@@ -9,12 +9,17 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import DisplaySnack from "../../DisplaySnack";
 import PasswordIcon from "@mui/icons-material/Password";
+import { password as passwordValidate } from "../../../validate";
 
 const PASSWD_LEN = 5;
-const HELPER_TEXT_NEWPASSWD = `password must be atleast 6 char(s)`;
+const HELPER_TEXT_NEWPASSWD = `password must contains chars , digits or symbols of length 6  e.g Ex@mp1e `;
 const HELPER_TEXT_OLDPASSWD = `doesnot match the old password`;
 
-const ChangePassword = ({ showPasswordDialog, setShowPasswordDialog , UPDATE_PASSWD_URL }) => {
+const ChangePassword = ({
+  showPasswordDialog,
+  setShowPasswordDialog,
+  UPDATE_PASSWD_URL,
+}) => {
   const { user } = useContext(UserState);
 
   const [oldPasswdError, setOldpasswdError] = useState(false);
@@ -47,7 +52,12 @@ const ChangePassword = ({ showPasswordDialog, setShowPasswordDialog , UPDATE_PAS
       setOldpasswdError(true);
       return;
     }
-    if (!data.newPass || data.newPass.length < PASSWD_LEN) {
+    const password = data.newPass;
+
+    const isPassword = await passwordValidate({ password });
+    // if (!data.newPass || data.newPass.length < PASSWD_LEN)
+
+    if (isPassword === false) {
       setNewpasswdError(true);
       return;
     }

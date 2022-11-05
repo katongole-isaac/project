@@ -155,9 +155,7 @@ const MigrantAccounts = () => {
     <>
       <Container maxWidth={false} sx={{ flexGrow: 1, backgroundColor: "grey" }}>
         <UpdateError {...{ updateError, setUpdateError }} />
-        <Typography variant="h5" align="center">
-          Migrant Workers
-        </Typography>
+        <TitleSection />
         <div>
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -180,3 +178,13 @@ const MigrantAccounts = () => {
 };
 
 export default MigrantAccounts;
+
+const TitleSection = () => {
+  return (
+    <Box sx={{ m: 1, p: 1 }}>
+      <Typography variant="h5">
+        Table of Active and Pending migrant Accounts
+      </Typography>
+    </Box>
+  );
+};

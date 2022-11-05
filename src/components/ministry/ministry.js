@@ -9,15 +9,14 @@ const useMinistryStyles = makeStyles((theme) => {
     },
     drawer: {
       width: drawerWidth,
-      border: "1px solid red",
       height: "calc(100% - 64px)",
       top: 64,
     },
     paperDrawer: {
       width: drawerWidth,
-      backgroundColor: "pink", //#212529
-      height: "calc(100% - 64px)",
-      top: 64,
+      // backgroundColor: "pink", //#212529
+      // height: "calc(100% - 64px)",
+      // top: 64,
     },
     bar: {
       // maxWidth: `calc(100% - ${drawerWidth}px)`,

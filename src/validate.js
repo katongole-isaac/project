@@ -31,7 +31,7 @@ export const nameValidate = async (name) => {
       .min(3)
       .max(40)
       .trim()
-      .matches(/^[a-zA-Z_]{3,}$/g)
+      .matches(/^[A-Za-z\s]{3,}$/gi)
       .required(),
   });
   return await schema.isValid(name);
@@ -44,7 +44,7 @@ export const locationValidate = async (location) => {
       .min(3)
       .max(40)
       .trim()
-      .matches(/^[A-Za-z_]{3,}$/g)
+      .matches(/^[A-Za-z\s]{3,}$/gi)
       .required(),
   });
   return await schema.isValid(location);

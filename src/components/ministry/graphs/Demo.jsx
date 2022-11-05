@@ -1,4 +1,4 @@
-import { Doughnut, Line, Pie, Bar } from "react-chartjs-2";
+import { Doughnut, Line, Pie, Bar, PolarArea } from "react-chartjs-2";
 import {
   blue,
   green,
@@ -11,12 +11,21 @@ import {
 import { Chart, registerables } from "chart.js";
 import { useContext } from "react";
 import { MinistryStatContext } from "../MinistryStatisticsCardSection";
+import { getRandomColor } from "../../../utils/getRandomColor";
 Chart.register(...registerables);
 
 const oneHunPercent = 100;
-export default function DemoGraph({ _line, _pie, _doughnut, _bar }) {
+export default function DemoGraph({ _line, _pie, _doughnut, _bar, _polar }) {
   const { results } = useContext(MinistryStatContext);
-  const { agencyStat, totalComplaints } = results;
+  console.log(results);
+  let {
+    agencyStat,
+    totalComplaints,
+    forwardedComplaints,
+    pendingComplaints,
+    seenComplaints,
+    workedUponComplaints,
+  } = results;
   let agencyNames = [],
     agencyComplaintCount = [],
     agencyComplaintCountInPercent = [];
@@ -28,7 +37,9 @@ export default function DemoGraph({ _line, _pie, _doughnut, _bar }) {
       (agency.complaintsCount / totalComplaints) * oneHunPercent;
     agencyComplaintCountInPercent.push(countInPercentage);
   }
-
+  ///getting randomColors for display
+  const colors = getRandomColor(agencyNames.length);
+  console.log(colors);
   const data = {
     datasetIdKey: "_ID",
     labels: [...agencyNames],
@@ -36,10 +47,12 @@ export default function DemoGraph({ _line, _pie, _doughnut, _bar }) {
       {
         label: "Agencies",
         data: [...agencyComplaintCount],
-        backgroundColor: [red[400], green[800], lightGreen[400], blue[200]],
+        backgroundColor: [...colors],
       },
     ],
+    borderWidth: 1,
   };
+
   const dataForPie = {
     datasetIdKey: "_ID",
     labels: [...agencyNames],
@@ -47,7 +60,32 @@ export default function DemoGraph({ _line, _pie, _doughnut, _bar }) {
       {
         label: "Agencies",
         data: [...agencyComplaintCountInPercent],
-        backgroundColor: [red[400], green[800], lightGreen[400], blue[200]],
+        backgroundColor: [...colors],
+      },
+    ],
+  };
+
+  //polar chart data
+  const complaintsStatusInPercent = complaintStatusAsPercentage(
+    totalComplaints,
+    [
+      pendingComplaints,
+      seenComplaints,
+      (workedUponComplaints = 1),
+      (forwardedComplaints = 0.8),
+    ]
+  );
+  //polar chart data
+  const polarColors = getRandomColor(4);
+
+  const dataForPolar = {
+    type: "polarArea",
+    labels: ["pending", "seen", "workedUpon", "forwarded", "Closed"],
+    datasets: [
+      {
+        label: `Complaint Status`,
+        data: [...complaintsStatusInPercent],
+        backgroundColor: [...polarColors],
       },
     ],
   };
@@ -60,4 +98,20 @@ export default function DemoGraph({ _line, _pie, _doughnut, _bar }) {
 
   //agency aganist complaints in (%) expressed as a Pie chart
   if (_pie) return <Pie data={dataForPie} />;
+
+  if (_polar) return <PolarArea data={dataForPolar} />;
 }
+
+const complaintStatusAsPercentage = (totalNumber, data) => {
+  if (data.constructor !== Array) return; //check whether data is of typeof array
+  if (typeof totalNumber !== "number") return;
+
+  const ifDataConsistsOfItemNotNumber = data.some(
+    (dataItem) => typeof dataItem !== "number"
+  ); //check if any array item is not a number.
+  if (ifDataConsistsOfItemNotNumber) return;
+
+  const oneHunPercent = 100;
+
+  return data.map((dataItem) => (dataItem / totalNumber) * oneHunPercent); // return [ ]
+};

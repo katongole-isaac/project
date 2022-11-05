@@ -7,9 +7,10 @@ import Loading from "../Loading";
 import useFetch from "../../useFetch";
 import PageError from "../PageError";
 import React from "react";
+import { Masonry } from "@mui/lab";
 
 const MinistryStatContext = React.createContext();
-
+const fixedBoxWidth = `15%`;
 const MINISTRY_STAT_URL = `/ministry/view`;
 const MinistryStatisticsCardSection = () => {
   const classes = useMinistryStyles();
@@ -21,58 +22,69 @@ const MinistryStatisticsCardSection = () => {
   console.log(results);
   const { totalComplaints, totalAgencies, migrants } = results;
 
-  // className={classes.ministryCardSection}
   return (
     <>
       <MinistryStatContext.Provider value={{ results }}>
-        <Box>
-          <Box sx={{ display: "flex" }}>
+        <Box
+          sx={{
+            minHeight: "95vh",
+            height: "100%",
+            backgroundColor: "#f8f9fa",
+          }}
+        >
+          <Box
+            sx={(theme) => ({
+              [theme.breakpoints.up("md")]: {
+                width: "15%",
+                height: "92%",
+                position: "fixed",
+                display: "flex",
+                flexWrap: "wrap",
+                p: 1,
+              },
+            })}
+          >
             <MinistryStatCard label="TotalComplaints" num={totalComplaints} />
             <MinistryStatCard label="TotalAgencies" num={totalAgencies} />
             <MinistryStatCard label="TotalMigrants" num={migrants} />
           </Box>
-          <Box sx={{ display: "flex" }}>
-            <MinistryGraphCard
-              _doughnut={true}
-              chartTitle="Doughnut showing agencies aganist complaints"
-            />
-            <MinistryGraphCard _bar={true} chartTitle="Bar graph showing complaints with their respe" />
-            <MinistryGraphCard
-              _pie={true}
-              chartTitle="Pie Chart showing agencies with the complaint expressed in percentage (%) "
-              mt={3}
-            />
+          <Box sx={{ display: "flex", height: "100%" }}>
+            <Box sx={{ width: "18%", height: "100%" }}></Box>
+            <Box
+              sx={(theme) => ({
+                height: "100%",
+                flexGrow: 1,
+              })}
+            >
+              <Masonry
+                columns={{ xs: 1, sm: 1, md: 2, lg: 2 }}
+                spacing={1}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <MinistryGraphCard
+                  _doughnut={true}
+                  chartTitle="Doughnut showing agencies aganist complaints"
+                />
+                <MinistryGraphCard
+                  _bar={true}
+                  chartTitle="Bar graph showing complaints with their respective agencies"
+                />
+                <MinistryGraphCard
+                  _pie={true}
+                  chartTitle="Pie Chart showing agencies with the complaint expressed in percentage (%) "
+                  mt={3}
+                />
+                <MinistryGraphCard
+                  _polar={true}
+                  chartTitle="Polar Chart showing comparison between complaint status "
+                  mt={3}
+                />
+              </Masonry>
+            </Box>
           </Box>
-          {/* 
-        <Grid container spacing={1}>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={4}
-            lg={2.2}
-            sx={{ border: "1px solid red" }}
-          >
-            <Stack>
-              <MinistryStatCard label="TotalComplaints" num={totalComplaints} />
-              <MinistryStatCard label="TotalAgencies" num={totalAgencies} />
-              <MinistryStatCard label="TotalMigrants" num={migrants} />
-            </Stack>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={6}
-            lg={8}
-            sx={{ border: "1px solid red", display: "flex", flexWrap: true }}
-          >
-            <MinistryGraphCard _doughnut={true} />
-            <MinistryGraphCard _bar={true} />
-            <MinistryGraphCard _pie={true} />
-          </Grid>
-        </Grid>
-     */}
         </Box>
       </MinistryStatContext.Provider>
     </>
