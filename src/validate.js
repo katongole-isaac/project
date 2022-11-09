@@ -10,6 +10,20 @@ export const email = async (email) => {
   return await schema.isValid(email);
 };
 
+export const defaultPasswd = async (password) => {
+  schema = yup.object().shape({
+    password: yup
+      .string()
+      .min(6)
+      .max(40)
+      .matches(
+        /^123456$/ // here ?= means followedby , () means groups
+      )
+      .required(),
+  });
+  return await schema.isValid(password);
+};
+
 export const password = async (password) => {
   schema = yup.object().shape({
     password: yup
@@ -64,8 +78,8 @@ export const passport = async (passport) => {
       .string()
       .trim()
       .min(9)
-      .max(15)
-      .matches(/^A\d{8,}/g)
+      .max(9)
+      .matches(/^A\d{8}/g)
       .required(),
   });
   return await schema.isValid(passport);

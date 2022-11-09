@@ -15,6 +15,7 @@ import authFetch from "../../../authFetch";
 import { useState } from "react";
 import useFetch from "../../../useFetch";
 import { UserState } from "../../../userContext";
+import AvatarDialog from "../../../components/singleComplaintView/AvatarDialog";
 
 const useInput = makeStyles({
   fileBtn: {
@@ -44,6 +45,11 @@ const Profile = () => {
   const [imageLoadError, setImageLoadError] = useState("");
 
   const { results } = useFetch(`${PROFILE_URL}${user.user}`);
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleShowAvatar  = () =>{
+    setOpenDialog(true);
+  }
 
   const handleSaveImage = async (e) => {
     console.log("image saved....");
@@ -71,73 +77,82 @@ const Profile = () => {
   };
 
   return (
-    <div className="migrant-profile">
-      <Typography variant="h2">Profile</Typography>
-      <Grid container justifyContent="center">
-        <Grid item xs={12} sm={11} md={6}>
-          <Paper>
-            <Typography variant="h6" align="center">
-              Profile
-            </Typography>
-            {imageLoadError && (
-              <>
-                <Typography variant="body1" color="error" align="center">
-                  {imageLoadError}
-                </Typography>
-              </>
-            )}
-            <div className="div-file">
-              <input
-                type="file"
-                accept="image/jpeg, image/jpg"
-                onChange={handleSaveImage}
-              />
-              <Button
-                size="large"
-                variant="contained"
-                className={classes.fileBtn}
-                startIcon={<AddIcon />}
-              >
-                upload
-              </Button>
-            </div>
-            <div className="d-flex justify-content-center mt-4">
-              <Avatar
-                alt="test-image"
-                ref={image_Avatar}
-                src={
-                  imageUrl
-                    ? `${GET_PROFILE_IMAGE}${imageUrl}`
-                    : results?.user
-                    ? `${GET_PROFILE_IMAGE}${results.user.profilePic}`
-                    : ""
-                }
-                variant="rounded"
-                className="image-center"
-                sx={{ width: 150, height: 150 }}
-              />
-            </div>
-            <hr />
-            <div className="d-flex justify-content-around m-2 p-2">
-              <div>
-                <Typography>Name:</Typography>
-                <Typography>Email</Typography>
-                <Typography>Phone:</Typography>
-                <Typography>Passport</Typography>
-                <Typography>Profile</Typography>
+    <>
+      <AvatarDialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        imageUrl={`${BASE_URL}/${profilePic}`}
+      />
+      <div className="migrant-profile">
+        <Typography variant="h2">Profile</Typography>
+        <Grid container justifyContent="center">
+          <Grid item xs={12} sm={11} md={6}>
+            <Paper>
+              <Typography variant="h6" align="center">
+                Profile
+              </Typography>
+              {imageLoadError && (
+                <>
+                  <Typography variant="body1" color="error" align="center">
+                    {imageLoadError}
+                  </Typography>
+                </>
+              )}
+              <div className="div-file">
+                <input
+                  type="file"
+                  accept="image/jpeg, image/jpg"
+                  onChange={handleSaveImage}
+                />
+                <Button
+                  size="large"
+                  variant="contained"
+                  className={classes.fileBtn}
+                  startIcon={<AddIcon />}
+                >
+                  upload
+                </Button>
               </div>
-              <div>
-                <Typography>{`${user?.firstname} ${user?.lastname}`}</Typography>
-                <Typography>{`${user?.email}`}</Typography>
-                <Typography>{user?.phone}</Typography>
-                <Typography>{user?.passport}</Typography>
-                <Typography>Ugandan</Typography>
+              <div className="d-flex justify-content-center mt-4">
+                <IconButton onClick={handleShowAvatar}>
+                  <Avatar
+                    alt="test-image"
+                    ref={image_Avatar}
+                    src={
+                      imageUrl
+                        ? `${GET_PROFILE_IMAGE}${imageUrl}`
+                        : results?.user
+                        ? `${GET_PROFILE_IMAGE}${results.user.profilePic}`
+                        : ""
+                    }
+                    variant="rounded"
+                    className="image-center"
+                    sx={{ width: 150, height: 150 }}
+                  />
+                </IconButton>
               </div>
-            </div>
-          </Paper>
+              <hr />
+              <div className="d-flex justify-content-around m-2 p-2">
+                <div>
+                  <Typography>Name:</Typography>
+                  <Typography>Email</Typography>
+                  <Typography>Phone:</Typography>
+                  <Typography>Passport</Typography>
+                  <Typography>Profile</Typography>
+                </div>
+                <div>
+                  <Typography>{`${user?.firstname} ${user?.lastname}`}</Typography>
+                  <Typography>{`${user?.email}`}</Typography>
+                  <Typography>{user?.phone}</Typography>
+                  <Typography>{user?.passport}</Typography>
+                  <Typography>Ugandan</Typography>
+                </div>
+              </div>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </>
   );
 };
 

@@ -15,6 +15,7 @@ import {
   password as passValidate,
   phoneValidate,
   locationValidate,
+  defaultPasswd,
 } from "../../../validate";
 import axios from "axios";
 import { useRef } from "react";
@@ -66,7 +67,7 @@ const CreateUser = () => {
     const { name, phone, email, password, location } = data;
     const isName = await nameValidate({ name });
     const isEmail = await emailValidate({ email });
-    const isPassword = await passValidate({ password });
+    const isPassword = await defaultPasswd({ password });
     const isPhone = await phoneValidate({ phone });
     const isLocation = await locationValidate({ location });
 
@@ -116,6 +117,14 @@ const CreateUser = () => {
             msg: "Account has been created",
           };
         });
+
+        setData((prev) => ({
+          name: "",
+          phone: "",
+          email: "",
+          password: "",
+          location: "",
+        }));
       }
     } catch (ex) {
       console.log(ex);
@@ -145,44 +154,54 @@ const CreateUser = () => {
               <FormControl fullWidth margin="normal">
                 <TextField
                   label="Name"
+                  value={data.name}
                   name="name"
                   ref={nameRef}
                   error={nameError}
                   onChange={(e) => handleChange(e)}
                   size="small"
                   placeholder="Name of the local Recruitment Agency"
+                  helperText={
+                    nameError && "name should contain only char(s)... "
+                  }
                 />
               </FormControl>
               <FormControl fullWidth margin="normal">
                 <TextField
                   label="Email"
                   name="email"
+                  value={data.email}
                   error={emailError}
                   onChange={(e) => handleChange(e)}
                   size="small"
                   placeholder="Email of the Local Recruitment Agency"
+                  helperText={emailError && "invalid email.."}
                 />
               </FormControl>
               <FormControl fullWidth margin="normal">
                 <TextField
                   label="Telephone"
                   name="phone"
+                  value={data.phone}
                   type="phone"
                   error={phoneError}
                   onChange={(e) => handleChange(e)}
                   size="small"
                   placeholder="Telephone number of the local Recruitment Agency"
+                  helperText={phoneError && "Invalid phone number format"}
                 />
               </FormControl>
               <FormControl fullWidth margin="normal">
                 <TextField
                   label="Password"
                   name="password"
+                  value={data.password}
                   type="password"
                   error={passwordError}
                   onChange={(e) => handleChange(e)}
                   size="small"
                   placeholder="Password"
+                  helperText={passwordError && "The default password is 123456"}
                 />
               </FormControl>
               <FormControl fullWidth margin="normal">
@@ -190,10 +209,14 @@ const CreateUser = () => {
                   label="location"
                   name="location"
                   type="text"
+                  value={data.location}
                   error={locationError}
                   onChange={(e) => handleChange(e)}
                   size="small"
                   placeholder="Telephone number of the local Recruitment Agency"
+                  helperText={
+                    locationError && "location should contain only char(s)... "
+                  }
                 />
               </FormControl>
             </form>

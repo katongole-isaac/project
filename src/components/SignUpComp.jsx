@@ -186,7 +186,9 @@ const SignUpComp = ({
                     name="lastname"
                     value={lastname}
                     error={lastNameError}
-                    helperText={lastNameError && "invalid name format... "}
+                    helperText={
+                      lastNameError && "name should contain only char(s)... "
+                    }
                   />
                 </FormControl>
               </Box>
@@ -200,6 +202,7 @@ const SignUpComp = ({
                   size="small"
                   type="email"
                   error={emailError}
+                  helperText={emailError && "invalid email.."}
                 />
               </FormControl>
               <FormControl fullWidth sx={{ margin: 1 }}>
@@ -241,7 +244,9 @@ const SignUpComp = ({
                   onChange={handleChange}
                   type="text"
                   error={passportError}
-                  helperText={passportError && "Invalid passport number"}
+                  helperText={
+                    passportError && "valid passport format e.g A780934921"
+                  }
                 />
               </FormControl>
 

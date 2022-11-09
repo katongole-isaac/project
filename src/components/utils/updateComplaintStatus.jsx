@@ -13,9 +13,11 @@ const updateComplaintStatus = async (
     });
     if (resp.status >= 200 && resp.status <= 299) {
       console.log(resp.data);
+      return true;
     }
   } catch (ex) {
     console.log(ex);
+    return false;
   }
 };
 

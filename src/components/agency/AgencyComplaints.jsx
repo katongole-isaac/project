@@ -100,9 +100,6 @@ const AgencyComplaints = ({
                 key={complaint._id}
               >
                 <SingleComplaint {...complaint} formatType={formatTypeColors} />
-                <SingleComplaint {...complaint} formatType={formatTypeColors} />
-                <SingleComplaint {...complaint} formatType={formatTypeColors} />
-                <SingleComplaint {...complaint} formatType={formatTypeColors} />
               </Link>
             </>
           ))}

@@ -18,7 +18,7 @@ const TextReason = ({ reason, setReason, reasonErr, setReasonErr }) => {
           size="small"
           onChange={(e) => handleChange(e)}
           error={reasonErr}
-          helperText={reasonErr ? "to short characters.." : ""}
+          helperText={reasonErr ? "reason must atleast have 5 char(s).." : ""}
         />
       </FormControl>
     </>

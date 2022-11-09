@@ -202,19 +202,6 @@ const Accounts = ({ setTotalAccounts, setClosedAccs, setActiveAccs }) => {
   if (!rowIdsToBeDeleted.length <= 0) rows = DeleteRow(rowIdsToBeDeleted);
 
   if (rows) getStat(rows, setActiveAccs, setTotalAccounts, setClosedAccs);
-  const more = [
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-    ...rows,
-  ];
-  rows = more;
 
   return (
     <>

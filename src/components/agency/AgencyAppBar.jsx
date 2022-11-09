@@ -1,4 +1,5 @@
 import {
+  Alert,
   AppBar,
   Box,
   Button,
@@ -12,6 +13,7 @@ import useAgencyStyles from "./agency";
 import { signOut, UserState } from "../../userContext";
 import { useContext } from "react";
 import { AgencyStatContext } from "./AgencyLayout";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 const AgencyAppBar = () => {
@@ -19,7 +21,7 @@ const AgencyAppBar = () => {
   const { user } = useContext(UserState);
   const { dispatch, id } = useContext(UserState);
   const { setShowStat } = useContext(AgencyStatContext);
-  
+
   const handleStatClick = () => {
     setShowStat((prev) => !prev);
   };
@@ -49,6 +51,8 @@ const AgencyAppBar = () => {
             >
               statistics
             </Button>
+
+            <AlertMsg />
           </Stack>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Typography>{user.name}</Typography>
@@ -63,3 +67,24 @@ const AgencyAppBar = () => {
 };
 
 export default AgencyAppBar;
+
+const AlertMsg = () => {
+  return (
+    <>
+      <Box>
+        <Alert severity="error" sx={{ p: 0, pl: 0.4, pr: 0.4 }}>
+          <Stack direction="row" spacing={0.8}>
+            <Typography variant="body2">
+              You are advised to change your password. The default password is
+              123456
+            </Typography>
+            <Link to={"/agency/profile"}>
+              <Typography varaint="body2">change password </Typography>
+            </Link>
+            <IconButton></IconButton>
+          </Stack>
+        </Alert>
+      </Box>
+    </>
+  );
+};

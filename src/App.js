@@ -43,6 +43,7 @@ import MinistryLetterComplaint from "./pages/ministry/pages/MinistryLetterCompla
 import MinistryStatistics from "./pages/ministry/pages/Statistics";
 import ClosedAccounts from "./pages/ClosedAccounts";
 import MinistryAgenciesList from "./components/ministry/MinistryAgenciesListing";
+import MinistryLetterList from "./components/ministry/MinistryLetterList";
 
 function App() {
   return (
@@ -94,11 +95,17 @@ function App() {
               <Route index element={<MinistryStatistics />} />
               <Route path="accounts" element={<AgencyPaperAccount />} />
               <Route path="complaint" element={<MinistryLetterComplaint />} />
-              <Route path="create" element={<CreateUser />} />
+              <Route
+                path="complaint/:agencyName"
+                element={<MinistryLetterList />}
+              />
               <Route
                 path="complaints/:complaintId"
-                element={<SingleComplaintView />}
+                element={
+                  <SingleComplaintView back={"/ministry/dashboard/complaint"} />
+                }
               />
+              <Route path="create" element={<CreateUser />} />
             </Route>
 
             <Route

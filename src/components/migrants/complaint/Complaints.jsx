@@ -1,5 +1,5 @@
 import { Masonry } from "@mui/lab";
-import { Box, Typography, Button, Grid, Container } from "@mui/material";
+import { Box, Typography, Button, Grid, Container, Alert } from "@mui/material";
 import { useState } from "react";
 import useMigrantComplaintStyles from "./migrantComplaints.styles";
 import TabSelect from "./TabSelect";
@@ -10,6 +10,7 @@ import TextReason from "./TextReason";
 import SuccessNotify from "../../notify/successNotify";
 import authFetch from "../../../authFetch";
 import { UserState } from "../../../userContext";
+import { useEffect } from "react";
 
 const checkDescription = (desc) => {
   const wordLimit = 15;
@@ -33,15 +34,30 @@ const MigrantComplaints = () => {
   const [onSuccess, setOnSuccess] = useState(false);
   const [onError, setOnError] = useState(false);
   const [compDescError, setCompDescError] = useState(false);
+  const [alert, setAlert] = useState(false);
+
+  const closeAlert = () => setAlert((prev) => false);
+  useEffect(() => {
+    const timeId = setTimeout(() => {
+      closeAlert();
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeId);
+    };
+
+  }, [alert]);
 
   const handleSubmit = async () => {
     const fd = new FormData();
     const fullname = `${user.firstname} ${user.lastname}`;
 
-    if (!reason || reason.length < 4) {
+    if (!reason || reason.length < 5 || !reason.match(/^[A-Za-z\s]+$/)) {
       setReasonErr(true);
       return;
     }
+
+    // if() return
 
     const desc = checkDescription(complaintDesc);
 
@@ -57,14 +73,17 @@ const MigrantComplaints = () => {
     fd.append("id", user.user);
     fd.append("agency", user.myAgency.name);
 
-    if (!video && !audio && !desc) return;
+    if (!video && !audio && !desc) {
+      setAlert(true);
+      return;
+    }
 
     try {
       const resp = await authFetch.post("/complaints", fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      setOnSuccess(true); // for notify
       if (resp.status >= 200 && resp.status <= 299) {
+        setOnSuccess(true); // for notify
         setTimeout(() => {
           setAudio(null);
           setVideo(null);
@@ -85,6 +104,16 @@ const MigrantComplaints = () => {
 
   return (
     <>
+      {alert && (
+        <>
+          <Alert severity="error">
+            <Typography varaint="body2">
+              You must atleast compose a complaint either using audio , video ,
+              text
+            </Typography>
+          </Alert>
+        </>
+      )}
       <SuccessNotify
         success={onSuccess}
         setOnSuccess={setOnSuccess}

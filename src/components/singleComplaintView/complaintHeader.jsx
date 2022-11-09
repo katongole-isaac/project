@@ -2,11 +2,11 @@ import { Box, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 
-const ComplaintHeader = () => {
+const ComplaintHeader = ({ back }) => {
   return (
     <>
       <Box sx={{ width: "100%", mt: 1 }}>
-        <Link to="../">
+        <Link to={back || "../"}>
           <IconButton>
             <KeyboardBackspaceIcon />
           </IconButton>

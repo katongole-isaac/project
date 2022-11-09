@@ -1,8 +1,9 @@
-import { Alert, Avatar, Button, Grid, Stack } from "@mui/material";
+import { Alert, Avatar, Button, Grid, IconButton, Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
 import authFetch from "../../authFetch";
 import useFetch from "../../useFetch";
+import AvatarDialog from "../singleComplaintView/AvatarDialog";
 import BioInfo from "./BioInfo";
 import useGenStyles from "./styles";
 
@@ -18,6 +19,12 @@ const ProfileHeader = ({ user }) => {
   const [imageUrl, setImageUrl] = useState("");
 
   const { results } = useFetch(`${PROFILE_URL}${user.user}`);
+
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const handleShowAvatar = () => {
+    setOpenDialog(true);
+  };
 
   const handleSaveImage = async (e) => {
     console.log("image saved....");
@@ -52,6 +59,17 @@ const ProfileHeader = ({ user }) => {
 
   return (
     <>
+      <AvatarDialog
+        open={openDialog}
+        setOpen={setOpenDialog}
+        imageUrl={
+          imageUrl
+            ? `${GET_PROFILE_IMAGE}${imageUrl}`
+            : results?.user
+            ? `${GET_PROFILE_IMAGE}${results.user.profilePic}`
+            : ""
+        }
+      />
       <Grid container sx={{}} alignItems="flex-start">
         <Grid
           item
@@ -90,26 +108,28 @@ const ProfileHeader = ({ user }) => {
                   justifySelf: "center",
                 }}
               >
-                <Avatar
-                  alt="profile_pic"
-                  ref={image_Avatar}
-                  src={
-                    imageUrl
-                      ? `${GET_PROFILE_IMAGE}${imageUrl}`
-                      : results?.user
-                      ? `${GET_PROFILE_IMAGE}${results.user.profilePic}`
-                      : ""
-                  }
-                  sx={{
-                    width: "120px",
-                    height: "120px",
-                    position: "relative",
-                    left: "30%",
-                    top: "5px",
-                    // justifySelf: "center",
-                    // border: "1px solid yellow",
-                  }}
-                />
+                <IconButton onClick={handleShowAvatar}>
+                  <Avatar
+                    alt="profile_pic"
+                    ref={image_Avatar}
+                    src={
+                      imageUrl
+                        ? `${GET_PROFILE_IMAGE}${imageUrl}`
+                        : results?.user
+                        ? `${GET_PROFILE_IMAGE}${results.user.profilePic}`
+                        : ""
+                    }
+                    sx={{
+                      width: "120px",
+                      height: "120px",
+                      position: "relative",
+                      left: "30%",
+                      top: "5px",
+                      // justifySelf: "center",
+                      // border: "1px solid yellow",
+                    }}
+                  />
+                </IconButton>
               </Box>
               <Box
                 sx={{
@@ -118,7 +138,7 @@ const ProfileHeader = ({ user }) => {
                   mb: 2,
                   position: "relative",
                   width: "50%",
-                  left: '5em'
+                  left: "5em",
                 }}
               >
                 <Button

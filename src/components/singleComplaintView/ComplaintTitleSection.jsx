@@ -11,14 +11,14 @@ const ComplaintTitleSection = () => {
   const [showStatus, setShowStatus] = useState(false);
 
   const handleWorkUponClick = () => {
-    updateComplaintStatus(
+    const status = updateComplaintStatus(
       UPDATE_COMPLAINT_STATUS_URL,
       res._id,
       COMPLAINT_STATUS
     );
-    setShowStatus(true);
+    if (status) setShowStatus(true);
   };
-  
+
   return (
     <>
       <Box
@@ -48,7 +48,7 @@ const ComplaintTitleSection = () => {
               <Button
                 size="small"
                 onClick={handleWorkUponClick}
-                variant='outlined'
+                variant="outlined"
                 sx={{ textTransform: "lowercase" }}
               >
                 work upon

@@ -7,7 +7,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-const MinistryAgenciesListItem = ({}) => {
+import { Link } from "react-router-dom";
+import { getOneRandomColor } from "../../utils/randomColor";
+const MinistryAgenciesListItem = ({ name, location }) => {
+  const avatarBgColor = getOneRandomColor();
   return (
     <>
       <Card
@@ -21,7 +24,9 @@ const MinistryAgenciesListItem = ({}) => {
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <CardMedia>
-            <Avatar> P </Avatar>
+            <Avatar sx={{ backgroundColor: avatarBgColor }}>
+              {name[0].toUpperCase()}
+            </Avatar>
           </CardMedia>
           <Box
             sx={{
@@ -32,12 +37,13 @@ const MinistryAgenciesListItem = ({}) => {
             }}
           >
             <Stack direction="row" sx={{ width: "100%" }} spacing={1}>
-              <Typography> AGencyName </Typography>
+              <Link to={`/ministry/dashboard/complaint/${name}`}>
+                <Typography> {name} </Typography>
+              </Link>
               <Typography>|</Typography>
-              <Typography>Location</Typography>
-              <Typography> |</Typography>
-              <Typography> complaints </Typography>
-              <Typography> phone</Typography>
+              <Typography>{location}</Typography>
+              {/* <Typography> letter sent </Typography>
+              <Typography> phone</Typography> */}
             </Stack>
           </Box>
         </Box>

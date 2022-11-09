@@ -1,9 +1,10 @@
+import { KeyboardArrowLeftTwoTone } from "@mui/icons-material";
 import { Grid, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { Link } from "react-router-dom";
 import StyledReactDomLink from "./StyledReactDomLink";
 
-const NoContent = ({ msg, addAccount, pathToAddAccPage, height }) => {
+const NoContent = ({ msg, addAccount, pathToAddAccPage, height, back }) => {
   return (
     <>
       <Grid
@@ -27,6 +28,13 @@ const NoContent = ({ msg, addAccount, pathToAddAccPage, height }) => {
             spacing={2}
             sx={{ display: "flex", alignItems: "center" }}
           >
+            {back && (
+              <>
+                <Link to={back}>
+                  <KeyboardArrowLeftTwoTone />
+                </Link>
+              </>
+            )}
             <Typography variant="body1" sx={{ fontWeight: 700 }}>
               {msg}
             </Typography>

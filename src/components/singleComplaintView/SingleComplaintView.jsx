@@ -52,7 +52,7 @@ const useTestingView = makeStyles({
 
 const COMPLAINT_URL = `/complaints/views/`;
 
-const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
+const SingleComplaintView = ({ audioUrl, videoUrl, desc, back }) => {
   const { user } = useContext(UserState);
 
   const [isMinistry, setIsMinistry] = useState(user?.username ? true : false); //checking if its a ministry account
@@ -132,7 +132,7 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc }) => {
                 setOnLetterSend={setOnLetterSend}
                 setOnLetterError={setOnLetterError}
               />
-              <ComplaintHeader />
+              <ComplaintHeader back={back} />
               <ComplaintTitleSection />
               <ComplaintBioInfo />
               <VideoComplaintView />

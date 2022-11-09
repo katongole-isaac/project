@@ -61,7 +61,7 @@ const MinistryLetterCard = ({
               />
               <Link to={`${COMPLAINT_URL}${complaintId}`}>
                 <Typography variant="body2" sx={{ color }}>
-                  complaint of {migrantName} <strong> |</strong> {from}
+                  complaint of {migrantName}
                 </Typography>
               </Link>
             </Stack>

@@ -35,7 +35,7 @@ const Layout = () => {
 			path: "login",
 		},
 		{
-			name: "sigUp",
+			name: "signUp",
 			path: "signup",
 		},
 	];
