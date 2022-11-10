@@ -76,7 +76,7 @@ const VideoCard = ({ _id, reason, sent, status, videoUrl }) => {
                   onClick={() => setOpenDialog(true)}
                   className={classes.complaintLinks}
                 >
-                  comments{" "}
+                  comments
                 </a>
               </Stack>
             </Stack>

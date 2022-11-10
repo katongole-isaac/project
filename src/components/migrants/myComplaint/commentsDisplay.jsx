@@ -6,6 +6,7 @@ import ReactHtmlParser from "react-html-parser";
 const COMMENT_URL = `/comments/my`;
 
 const Comments = ({ _id }) => {
+  console.log(_id);
   const { results, isLoading, errorDetails } = useFetch(
     `${COMMENT_URL}?id=${_id}`
   );
@@ -13,19 +14,20 @@ const Comments = ({ _id }) => {
   if (isLoading)
     return (
       <>
-        <Skeleton variant="rectangular" sx={{ m: 1 }} />
-        <Skeleton variant="rectangular" sx={{ m: 1 }} />
-        <Skeleton variant="rectangular" sx={{ m: 1 }} />
-        <Skeleton variant="rectangular" sx={{ m: 1 }} />
-        <Skeleton variant="rectangular" sx={{ m: 1 }} />
+        <Skeleton variant="rectangular" sx={{ m: 1, height: "60px" }} />
+        <Skeleton variant="rectangular" sx={{ m: 1, height: "60px" }} />
+        <Skeleton variant="rectangular" sx={{ m: 1, height: "60px" }} />
+        <Skeleton variant="rectangular" sx={{ m: 1, height: "60px" }} />
+        <Skeleton variant="rectangular" sx={{ m: 1, height: "60px" }} />
+        <Skeleton variant="rectangular" sx={{ m: 1, height: "60px" }} />
       </>
     );
 
-  if (Object.keys(errorDetails).length !== 0)
+  if (Object.keys(errorDetails).length !== 0 )
     return (
       <>
         <Typography className="text-danger">
-          failed to fetch the comments
+          failed to fetch the comments, try again
         </Typography>
       </>
     );

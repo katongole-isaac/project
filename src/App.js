@@ -44,6 +44,7 @@ import MinistryStatistics from "./pages/ministry/pages/Statistics";
 import ClosedAccounts from "./pages/ClosedAccounts";
 import MinistryAgenciesList from "./components/ministry/MinistryAgenciesListing";
 import MinistryLetterList from "./components/ministry/MinistryLetterList";
+import DesktopComplaintLayout from "./components/migrants/myComplaint/desktop/layout";
 
 function App() {
   return (
@@ -64,7 +65,7 @@ function App() {
             <Route path="pro" element={<MinistryAgenciesList />} />
             <Route path="/editor" element={<ComplaintEditor />} />
             <Route path="/test/view" element={<SingleComplaintView />} />
-            <Route path="videor" element={<VideoRec />} />
+            <Route path="desktop" element={<DesktopComplaintLayout />} />
             {/* Testing routes here */}
 
             <Route path="*" element={<Error />} />
@@ -83,6 +84,7 @@ function App() {
               <Route index element={<MigrantComplaints />} />
               <Route path="profile" element={<ProfileLayout />} />
               <Route path="mycomplaints" element={<MigrantLayout />} />
+              <Route path="desktop" element={<DesktopComplaintLayout />} />
             </Route>
             <Route
               path="/ministry/dashboard"

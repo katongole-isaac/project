@@ -70,11 +70,13 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc, back }) => {
     date: null,
     author: "",
   });
+  
   const [_comment, _setComment] = useState([]); // for displaying the date after being saved
 
   const { isLoading, errorDetails, results, error } = useFetch(
     `${COMPLAINT_URL}${complaintId}`
   );
+
   const [showEditor, setShowEditor] = useState(false);
   const handleClick = () => {
     setShowEditor((prev) => !prev);
@@ -92,7 +94,6 @@ const SingleComplaintView = ({ audioUrl, videoUrl, desc, back }) => {
     }
   }, [errorDetails]);
 
-  let load = true;
   if (isLoading) return <Loading />;
 
   if (Object.keys(errorDetails).length !== 0)

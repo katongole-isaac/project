@@ -60,10 +60,6 @@ const AudioCard = ({ _id, reason, sent, audioUrl, status }) => {
           <CardMedia>
             <Box className={classes.audioBox}>
               <Box sx={{ m: 1, flexGrow: 1 }}>
-                {/* <AudioPlayer
-                  src={`${AUDIO_URL}${audioUrl.replace("uploads/", "")}`}
-                  onPlay={(e) => console.log("onPlay")}
-                /> */}
                 <audio
                   src={`${AUDIO_URL}${audioUrl.replace("uploads/", "")}`}
                   controls
