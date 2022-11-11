@@ -18,6 +18,7 @@ const oneHunPercent = 100;
 export default function DemoGraph({ _line, _pie, _doughnut, _bar, _polar }) {
   const { results } = useContext(MinistryStatContext);
   console.log(results);
+
   let {
     agencyStat,
     totalComplaints,
@@ -25,6 +26,7 @@ export default function DemoGraph({ _line, _pie, _doughnut, _bar, _polar }) {
     pendingComplaints,
     seenComplaints,
     workedUponComplaints,
+    migrantsPerAgency,
   } = results;
   let agencyNames = [],
     agencyComplaintCount = [],
@@ -39,7 +41,7 @@ export default function DemoGraph({ _line, _pie, _doughnut, _bar, _polar }) {
   }
   ///getting randomColors for display
   const colors = getRandomColor(agencyNames.length);
-  console.log(colors);
+
   const data = {
     datasetIdKey: "_ID",
     labels: [...agencyNames],
@@ -65,6 +67,20 @@ export default function DemoGraph({ _line, _pie, _doughnut, _bar, _polar }) {
     ],
   };
 
+  const barColors = getRandomColor(migrantsPerAgency.length);
+
+  //Bar graph showing migrants against agency
+  const dataForBar = {
+    labels: [...migrantsPerAgency.map((item) => item.agency)],
+    datasets: [
+      {
+        label: "Agencies",
+        data: [...migrantsPerAgency.map((item) => item.migrantsCount)],
+        backgroundColor: [...barColors],
+      },
+    ],
+  };
+
   //polar chart data
   const complaintsStatusInPercent = complaintStatusAsPercentage(
     totalComplaints,
@@ -76,7 +92,7 @@ export default function DemoGraph({ _line, _pie, _doughnut, _bar, _polar }) {
     ]
   );
   //polar chart data
-  const polarColors = getRandomColor(4);
+  const polarColors = getRandomColor(5);
 
   const dataForPolar = {
     type: "polarArea",
@@ -94,7 +110,7 @@ export default function DemoGraph({ _line, _pie, _doughnut, _bar, _polar }) {
   if (_doughnut) return <Doughnut datasetIdKey="id" data={data} />;
 
   //for agency aganist complaints === its a bar graph
-  if (_bar) return <Bar data={data} />;
+  if (_bar) return <Bar data={dataForBar} />;
 
   //agency aganist complaints in (%) expressed as a Pie chart
   if (_pie) return <Pie data={dataForPie} />;

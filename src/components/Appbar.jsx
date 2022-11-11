@@ -32,34 +32,34 @@ const AppMenu = () => {
 	}, [drawerStatus]);
 
 	return (
-		<AppBar
-			sx={{
-				width: `100%`,
-				backgroundColor: "#263238",
-				color: "black",
-			}}
-			elevation={0}
-		>
-			<Toolbar className="d-flex justify-content-between">
-				<Typography variant="h6" component="div">
-					<MenuIcon
-						onClick={showHideDrawer}
-						ref={btnRef}
-						sx={{ marginRight: 2, color: "white" }}
-					/>
-					Dashboard
-				</Typography>
-				<div className="d-flex">
-					<Typography variant="h6" component="div" className="text-muted">
-						Hi, {user && user.firstname}
-					</Typography>
-					<IconButton onClick={() => signOut(dispatch, id)}>
-						<LogoutIcon />
-					</IconButton>
-				</div>
-			</Toolbar>
-		</AppBar>
-	);
+    <AppBar
+      sx={{
+        width: `100%`,
+        backgroundColor: "#00b4d8",
+        color: "black",
+      }}
+      elevation={0}
+    >
+      <Toolbar className="d-flex justify-content-between">
+        <Typography variant="h6" component="div">
+          <MenuIcon
+            onClick={showHideDrawer}
+            ref={btnRef}
+            sx={{ marginRight: 2, color: "white" }}
+          />
+          Dashboard
+        </Typography>
+        <div className="d-flex">
+          <Typography variant="h6" component="div" className="text-muted">
+            Hi, {user && user.firstname}
+          </Typography>
+          <IconButton onClick={() => signOut(dispatch, id)}>
+            <LogoutIcon />
+          </IconButton>
+        </div>
+      </Toolbar>
+    </AppBar>
+  );
 };
 
 export default AppMenu;

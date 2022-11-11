@@ -6,6 +6,7 @@ import VideoPlayer from "../VideoPlayer";
 import DesktopComment from "./DesktopComments";
 import DesktopComplaintDisplay from "./DesktopComplaintDisplay";
 import DesktopComplaintHeadSection from "./DesktopComplaintHeadSection";
+import EmptyContent from "./EmptyContent";
 import { useDesktopStyles } from "./styles";
 
 const COMPLAINT_URL = `/complaints/views/`;
@@ -13,7 +14,7 @@ const COMPLAINT_URL = `/complaints/views/`;
 const DeskSingleComplaint = ({ complaintId }) => {
   // inital render when complaintId is not set
   if (complaintId === null || complaintId === undefined)
-    return <> Welcome here</>;
+    return <EmptyContent />;
 
   return <DesktopComplaintPage complaintId={complaintId} />;
 };
@@ -49,3 +50,4 @@ const DesktopComplaintPage = ({ complaintId }) => {
     </>
   );
 };
+

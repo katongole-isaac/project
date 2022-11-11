@@ -5,10 +5,10 @@ const DesktopText = ({ desc }) => {
     <>
       <Box
         sx={{
-          p: 1,
+          p: 4,
         }}
       >
-        <Typography>{desc}</Typography>
+        <Typography textAlign="justify">{desc}</Typography>
       </Box>
     </>
   );

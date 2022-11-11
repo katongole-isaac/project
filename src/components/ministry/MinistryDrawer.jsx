@@ -18,6 +18,7 @@ import { useMinistryStyles } from "./ministry";
 import { Stack } from "@mui/system";
 import { useState } from "react";
 import StackedLineChartIcon from "@mui/icons-material/StackedLineChart";
+import CourtOfArms from "../../images/coatOfArms.png";
 
 const MinistryDrawer = () => {
   const classes = useMinistryStyles();
@@ -55,7 +56,9 @@ const MinistryDrawer = () => {
         }}
       >
         <Box sx={{ height: "100%", backgroundColor: "#0081a7" }}>
-          <Box sx={{ height: "10%" }}></Box>
+          <Box sx={{ height: "20%", p: 1 }}>
+            <img src={CourtOfArms} width="90%" height="90%" />
+          </Box>
           <MinistryNavList
             navLink={navLink}
             classes={classes}
@@ -107,7 +110,7 @@ const MinistryNavList = ({ navLink, classes, activeLink, setActiveLink }) => {
                       <StackedLineChartIcon sx={{ color: "#FFF" }} />
                     </ListItemIcon>
                   )}
-                  <ListItemText primary={link.name} sx={{ color: "#FFF" }}  />
+                  <ListItemText primary={link.name} sx={{ color: "#FFF" }} />
                 </ListItemButton>
               </Link>
             </ListItem>

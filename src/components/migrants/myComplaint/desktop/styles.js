@@ -11,6 +11,8 @@ export const useDesktopStyles = makeStyles((theme) => ({
     flexShrink: 1,
     scrollbarWidth: "thin",
     position: "relative",
+    borderRight: "1px solid grey",
+    fontFamily: "Arial, Helvetica, sans-serif",
   },
   complaintListInnerBox: {
     overflow: "scroll",
@@ -19,10 +21,12 @@ export const useDesktopStyles = makeStyles((theme) => ({
   },
   singleComplaint: {
     flexGrow: 1,
+
     flexBasis: "60%",
     // border: "2px solid purple",
     // overflow: "scroll",
     overflowX: "hidden",
+    paddingLeft: 2,
   },
 
   desktopContainer: {

@@ -77,9 +77,9 @@ export const passport = async (passport) => {
     passport: yup
       .string()
       .trim()
-      .min(9)
-      .max(9)
-      .matches(/^A\d{8}/g)
+      .min(10)
+      .max(10)
+      .matches(/^A\d{9}/)
       .required(),
   });
   return await schema.isValid(passport);

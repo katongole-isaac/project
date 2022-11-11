@@ -70,7 +70,7 @@ const MinistryStatisticsCardSection = () => {
                 />
                 <MinistryGraphCard
                   _bar={true}
-                  chartTitle="Bar graph showing complaints with their respective agencies"
+                  chartTitle="Bar graph showing the number of migrants and agencies"
                 />
                 <MinistryGraphCard
                   _pie={true}

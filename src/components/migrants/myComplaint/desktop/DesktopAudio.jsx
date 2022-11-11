@@ -1,5 +1,7 @@
 import { Box, Typography } from "@mui/material";
 
+const AUDIO_URL = `http://localhost:3001/api/uploads/audio/`;
+
 const DesktopAudio = ({ audioUrl }) => {
   return (
     <>
@@ -7,7 +9,10 @@ const DesktopAudio = ({ audioUrl }) => {
         <Typography className="text-muted" variant="body2">
           Audio complaint
         </Typography>
-        <audio controls src={audioUrl}></audio>
+        <audio
+          controls
+          src={`${AUDIO_URL}${audioUrl.replace("uploads/", "")}`}
+        ></audio>
       </Box>
     </>
   );

@@ -83,7 +83,7 @@ function App() {
             >
               <Route index element={<MigrantComplaints />} />
               <Route path="profile" element={<ProfileLayout />} />
-              <Route path="mycomplaints" element={<MigrantLayout />} />
+              <Route path="mycomplaints" element={<DesktopComplaintLayout />} />
               <Route path="desktop" element={<DesktopComplaintLayout />} />
             </Route>
             <Route

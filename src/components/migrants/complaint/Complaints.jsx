@@ -52,7 +52,7 @@ const MigrantComplaints = () => {
     const fd = new FormData();
     const fullname = `${user.firstname} ${user.lastname}`;
 
-    if (!reason || reason.length < 5 || !reason.match(/^[A-Za-z\s]+$/)) {
+    if (!reason || reason.length < 5 || !reason.match(/^[A-Za-z\s.]+$/)) {
       setReasonErr(true);
       return;
     }

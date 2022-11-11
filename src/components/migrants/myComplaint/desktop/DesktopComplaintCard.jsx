@@ -30,15 +30,25 @@ const DesktopComplaintCard = ({
   const classes = useDesktopStyles();
 
   const checkStatus = (audio, text, video) => {
+    if (video !== "") return "video";
     if (audio !== "") return "audio";
     if (text !== "") return "text";
-    if (video !== "") return "video";
   };
 
   return (
     <>
       <ListItem sx={{ p: 0 }}>
-        <Card sx={{ m: 1, width: "100%", p: 0.8, height: "50px" }}>
+        <Card
+          sx={{
+            ml: 0.5,
+            mr: 0.5,
+            mb: 0.3,
+            width: "100%",
+            p: 0.8,
+            height: "50px",
+          }}
+          elevation={0}
+        >
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Box>
               <Stack>

@@ -3,7 +3,6 @@ import { useState } from "react";
 import Comments from "../commentsDisplay";
 
 const DesktopComment = ({ complaintId }) => {
-  console.log(complaintId);
   const [showComment, setComment] = useState(false);
   const handleShowComment = () => {
     setComment((prev) => !prev);
@@ -23,13 +22,6 @@ const DesktopComment = ({ complaintId }) => {
             <Comments _id={complaintId} />
           </>
         )}
-
-        {/* <Comments _id={complaintId} />
-        <Comments _id={complaintId} />
-        <Comments _id={complaintId} />
-        <Comments _id={complaintId} />
-        <Comments _id={complaintId} />
-        <Comments _id={complaintId} /> */}
       </Box>
     </>
   );

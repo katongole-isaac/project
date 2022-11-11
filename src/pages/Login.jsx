@@ -8,12 +8,20 @@ import Select from "@mui/material/Select";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Alert, Button, FormLabel, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  FormLabel,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { password, email } from "../validate";
 import { useEffect, useContext } from "react";
 import { loginUser, UserState } from "../userContext";
 import LoginLoading from "../components/LoginLoading";
 import { BaseUrl } from "../baseUrl";
+import { CourtOfArms } from "../components/CourtofArms";
 
 const url = "http://localhost:3001/api/user/login"; //for local code.
 // const url = `${BaseUrl}/api/user/login`;
@@ -167,8 +175,10 @@ const Login = () => {
           sx={{ maxHeight: "100vh", height: "88vh" }}
         >
           <Grid item xs={10} sm={8} md={5} lg={3}>
-            <Paper elevation={3} sx={{ marginTop: 12 }}>
+            <Paper elevation={0} sx={{ marginTop: 12 }}>
               {error && <Alert severity="error"> {error} </Alert>}
+              <CourtOfArms />
+
               <Typography variant="h4" align="center" sx={{ color: "#0C2D48" }}>
                 Login
               </Typography>

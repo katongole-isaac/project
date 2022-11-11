@@ -17,7 +17,7 @@ import useAgencyStyles from "./agency";
 import { Box } from "@mui/material";
 import { useState } from "react";
 import Person3Icon from "@mui/icons-material/Person3";
-
+import { CourtOfArms } from "../CourtofArms";
 const AgencySideNav = () => {
   const classes = useAgencyStyles();
   const [activeLink, setActiveLink] = useState(
@@ -55,7 +55,9 @@ const AgencySideNav = () => {
         }}
       >
         <Box sx={{ height: "100%", backgroundColor: "#003d5b" }}>
-          <Box sx={{ height: "10%" }}></Box>
+          <Box sx={{ height: " 200px", p: 1,  }}>
+            <CourtOfArms height="63%" width="80%" />
+          </Box>
           <AgencyList
             navLink={navLink}
             classes={classes}

@@ -16,36 +16,43 @@ const DesktopComplaintLayout = () => {
 
   return (
     <>
-      <Container
-        disableGutters
+      <Box
         sx={{
-          // border: "2px solid coral",
-          height: "93vh",
-          minHeight: "93vh",
-          maxHeight: "93vh",
-          width: "100%",
-          display: "flex",
-          padding: 0,
+          backgroundColor: "#F0F0F0",
         }}
       >
-        <Box className={classes.complaintList}>
-          <DesktopSearch
-            user={user}
-            setSearchIsLoading={setSearchIsLoading}
-            setSearchResults={setSearchResults}
-          />
-          <Box className={classes.complaintListInnerBox}>
-            <ScrollMe
-              searchIsLoading={searchIsLoading}
-              searchResults={searchResults}
-              setComplaintId={setComplaintId}
+        <Container
+          disableGutters
+          sx={{
+            // border: "2px solid coral",
+            height: "93vh",
+            minHeight: "93vh",
+            maxHeight: "93vh",
+            width: "100%",
+            display: "flex",
+            padding: 0,
+            backgroundColor: "#FAFAFA",
+          }}
+        >
+          <Box className={classes.complaintList}>
+            <DesktopSearch
+              user={user}
+              setSearchIsLoading={setSearchIsLoading}
+              setSearchResults={setSearchResults}
             />
+            <Box className={classes.complaintListInnerBox}>
+              <ScrollMe
+                searchIsLoading={searchIsLoading}
+                searchResults={searchResults}
+                setComplaintId={setComplaintId}
+              />
+            </Box>
           </Box>
-        </Box>
-        <Box className={classes.singleComplaint}>
-          <DeskSingleComplaint complaintId={complaintId} />
-        </Box>
-      </Container>
+          <Box className={classes.singleComplaint}>
+            <DeskSingleComplaint complaintId={complaintId} />
+          </Box>
+        </Container>
+      </Box>
     </>
   );
 };

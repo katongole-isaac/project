@@ -6,7 +6,6 @@ import ReactHtmlParser from "react-html-parser";
 const COMMENT_URL = `/comments/my`;
 
 const Comments = ({ _id }) => {
-  console.log(_id);
   const { results, isLoading, errorDetails } = useFetch(
     `${COMMENT_URL}?id=${_id}`
   );
@@ -33,13 +32,11 @@ const Comments = ({ _id }) => {
     );
 
   const { comments } = results;
-  console.log(results);
 
   if (comments === null) return <NoComment />;
 
   if (comments.length === 0) return <NoComment />;
 
-  console.log(comments);
   return (
     <>
       {comments.comments.map((comment) => {

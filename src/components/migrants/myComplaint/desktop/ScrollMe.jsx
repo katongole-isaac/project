@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useContext } from "react";
 import { blue } from "@mui/material/colors";
-
+import NoContent from "../../../NoContent";
 import useFetch from "../../../../useFetch";
 import { UserState } from "../../../../userContext";
 import Loading from "../../../Loading";
@@ -30,9 +30,13 @@ const ScrollMe = ({ setComplaintId, searchIsLoading, searchResults }) => {
   if (Object.keys(errorDetails)?.length !== 0) return <PageError />;
 
   let complaints = results.res;
-  console.log(complaints);
 
-  console.log(searchResults);
+  if (searchResults.length !== 0) {
+    complaints = searchResults;
+    console.log(searchResults);
+  }
+
+  if (complaints.length === 0) return <NoContent msg="No complaints here" />;
 
   return (
     <>
