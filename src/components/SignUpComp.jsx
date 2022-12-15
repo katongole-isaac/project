@@ -50,6 +50,10 @@ const SignUpComp = ({
   const [phoneError, setPhoneError] = useState(false);
   const [success, setSuccess] = useState(false);
   const [selectError, setSelectError] = useState(false);
+  const [ageError, setAgeError] = useState(false);
+  const [religionError, setReligionError] = useState(false);
+  const [tribeError, setTribeError] = useState(false);
+  const [ninError, setNinError] = useState(false);
 
   const handleChange = ({ target }) => {
     setFirstNameError(false);
@@ -59,6 +63,10 @@ const SignUpComp = ({
     setPasswordError(false);
     setPhoneError(false);
     setSelectError(false);
+    setAgeError(false);
+    setTribeError(false);
+    setReligionError(false);
+    setNinError(false);
 
     setData((prev) => {
       return {
@@ -76,7 +84,15 @@ const SignUpComp = ({
     phone,
     agency,
     gender,
+    age,
+    tribe,
+    religion,
+    marital,
+    nin,
   } = data;
+
+  const regexp = /^[a-zA-Z\s]{3,}$/;
+  const ninRegexp = /^C(M|F)[a-zA-Z\d]{12}$/i; //NIN
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -86,6 +102,7 @@ const SignUpComp = ({
     setPassportError(false);
     setPasswordError(false);
     setPhoneError(false);
+    setNinError(false);
 
     const isFirstName = await nameValidate({ name: firstname });
     const isLastName = await nameValidate({ name: lastname });
@@ -93,6 +110,10 @@ const SignUpComp = ({
     const isPassword = await passValidate({ password });
     const isPhone = await phoneValidate({ phone: phone });
     const isPassport = await passportValidate({ passport });
+    const isReligon = regexp.test(religion);
+    const isTribe = regexp.test(tribe);
+    const isAge = /^\d{2}$/.test(age);
+    const isNIN = ninRegexp.test(nin);
 
     if (isFirstName === false) {
       setFirstNameError(true);
@@ -120,6 +141,24 @@ const SignUpComp = ({
       return;
     }
 
+    if (isNIN === false) {
+      setNinError(true);
+      return;
+    }
+
+    if (isAge === false || age < 17) {
+      setAgeError(true);
+      return;
+    }
+    if (isTribe === false) {
+      setTribeError(true);
+      return;
+    }
+
+    if (isReligon === false) {
+      setReligionError(true);
+      return;
+    }
     if (signup && agency == "") {
       setSelectError(true);
       return;
@@ -128,8 +167,6 @@ const SignUpComp = ({
     if (isLogin || signup) {
       await loginFunc(url, data);
     } else if (!signup) {
-      console.log("registering", data.agency);
-
       const res = await register(url, data);
       if (res.status >= 200 && res.status <= 299) {
         setSuccess(true);
@@ -249,8 +286,23 @@ const SignUpComp = ({
                   }
                 />
               </FormControl>
+              <FormControl fullWidth sx={{ margin: 1 }}>
+                <TextField
+                  variant="standard"
+                  label="NationalID"
+                  value={nin}
+                  name="nin"
+                  size="small"
+                  onChange={handleChange}
+                  type="text"
+                  error={ninError}
+                  helperText={
+                    ninError && "valid NationalID format e.g CM0238FV23AD8A"
+                  }
+                />
+              </FormControl>
 
-              <FormControl>
+              <FormControl fullWidth sx={{ margin: 1 }}>
                 <FormLabel>Gender</FormLabel>
                 <RadioGroup
                   row
@@ -268,6 +320,75 @@ const SignUpComp = ({
                     value="F"
                     control={<Radio />}
                     label="Female"
+                  />
+                </RadioGroup>
+              </FormControl>
+
+              <Box sx={{ display: "flex" }}>
+                <FormControl sx={{ mr: 1 }}>
+                  <TextField
+                    label="Age"
+                    type="number"
+                    name="age"
+                    onChange={handleChange}
+                    value={age}
+                    variant="standard"
+                    size="small"
+                    error={ageError}
+                    helperText={
+                      ageError && "age must be 18 and above and only digit"
+                    }
+                  />
+                </FormControl>
+                <FormControl sx={{ mr: 1 }}>
+                  <TextField
+                    label="Tribe"
+                    type="text"
+                    name="tribe"
+                    onChange={handleChange}
+                    value={tribe}
+                    variant="standard"
+                    size="small"
+                    error={tribeError}
+                    helperText={
+                      tribeError && "only char(s) and atleast 3 char(s)"
+                    }
+                  />
+                </FormControl>
+                <FormControl sx={{ mr: 1 }}>
+                  <TextField
+                    label="Religion"
+                    type="text"
+                    name="religion"
+                    onChange={handleChange}
+                    value={religion}
+                    variant="standard"
+                    size="small"
+                    error={religionError}
+                    helperText={
+                      religionError && "length must be 3 and only char(s)"
+                    }
+                  />
+                </FormControl>
+              </Box>
+              <FormControl fullWidth sx={{ margin: 1 }}>
+                <FormLabel>Marital Status</FormLabel>
+                <RadioGroup
+                  row
+                  name="marital"
+                  defaultValue="single"
+                  value={marital}
+                  onChange={handleChange}
+                >
+                  <FormControlLabel
+                    value="married"
+                    control={<Radio />}
+                    label="Married"
+                  />
+                  <FormControlLabel
+                    value="single"
+                    control={<Radio />}
+                    label="Single"
                   />
                 </RadioGroup>
               </FormControl>

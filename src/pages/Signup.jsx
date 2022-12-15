@@ -24,6 +24,11 @@ const SignUp = () => {
     phone: "",
     agency: "",
     gender: "M",
+    age: 18,
+    tribe: "",
+    religion: "",
+    marital: "single",
+    nin: "",
   });
   const [error, setError] = useState("");
   const [isLogin, setIsLogin] = useState(true);

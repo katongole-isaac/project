@@ -13,8 +13,6 @@ a {
   background-color: #f8f9fa;
   height: 89.5vh;
   width: 100vw;
-  overflow-y: hidden;
-  overflow-x: hidden;
 }
 .agency-register {
   width: calc(100vw - 240px);
@@ -64,5 +62,4 @@ a {
 
 .error_page_link {
   text-decoration: none;
-  
 }
